@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Guide — Tensorium Docs</title>
+  <meta name="description" content="Build on Tensorium with the public RPC API and the @tensorium/sdk package.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Developer Guide</span></div>
+    <div class="topbar-links"><a href="https://www.npmjs.com/package/@tensorium/sdk" target="_blank">npm</a><a href="https://github.com/tensorium-labs/tensorium-sdk-js" target="_blank">SDK GitHub</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🛠 Developer</div>
+      <h1 class="page-title">Developer Guide</h1>
+      <p class="page-desc">Use the public RPC surface and the official JavaScript SDK to build wallets, dashboards, bots, and browser apps on Tensorium.</p>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body"><strong>Current SDK.</strong> The official JavaScript / TypeScript package is <code>@tensorium/sdk</code> on npm. Python SDK and dApp example are planned next.</div>
+    </div>
+
+    <div class="section" id="stack">
+      <h2>Current Developer Stack</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Package</span><span class="param-val"><code>@tensorium/sdk</code></span></div>
+        <div class="param-row"><span class="param-key">Install</span><span class="param-val"><code>npm install @tensorium/sdk</code></span></div>
+        <div class="param-row"><span class="param-key">Runtime</span><span class="param-val">Browser-safe and Node.js compatible</span></div>
+        <div class="param-row"><span class="param-key">Transport</span><span class="param-val">HTTP RPC</span></div>
+        <div class="param-row"><span class="param-key">Address format</span><span class="param-val"><code>txm1...</code> bech32</span></div>
+        <div class="param-row"><span class="param-key">Smallest unit</span><span class="param-val"><code>1 TXM = 100,000,000 atoms</code></span></div>
+      </div>
+    </div>
+
+    <div class="section" id="install">
+      <h2>Install</h2>
+      <div class="pre-header">npm</div>
+      <pre>npm install @tensorium/sdk</pre>
+      <p>Package link: <a href="https://www.npmjs.com/package/@tensorium/sdk" target="_blank">npmjs.com/package/@tensorium/sdk</a></p>
+    </div>
+
+    <div class="section" id="read-balance">
+      <h2>Read Balance</h2>
+      <div class="pre-header">TypeScript</div>
+      <pre>import { TxmRPC, TxmWallet } from '@tensorium/sdk';
+
+const rpc = new TxmRPC('https://rpc.tensoriumlabs.com');
+const wallet = TxmWallet.fromPrivateKey(process.env.TXM_PRIVATE_KEY!);
+
+const { utxos } = await rpc.getUtxos(wallet.address);
+const mature = utxos.filter((u) => u.mature);
+const balanceAtoms = mature.reduce((sum, u) =&gt; sum + BigInt(u.value_atoms), 0n);
+
+console.log({ address: wallet.address, balanceAtoms });</pre>
+      <p>Use mature UTXOs only when calculating spendable balance. Coinbase outputs remain locked until maturity is reached.</p>
+    </div>
+
+    <div class="section" id="send-tx">
+      <h2>Send Transaction</h2>
+      <div class="pre-header">TypeScript</div>
+      <pre>import { TxmRPC, TxmWallet, send } from '@tensorium/sdk';
+
+const rpc = new TxmRPC('https://rpc.tensoriumlabs.com');
+const wallet = TxmWallet.fromPrivateKey(process.env.TXM_PRIVATE_KEY!);
+
+const txid = await send(
+  rpc,
+  wallet,
+  'txm1qdestinationhere...',
+  100_000_000n
+);
+
+console.log('broadcast txid:', txid);</pre>
+      <p>The helper handles UTXO selection, transaction build, signing, and RPC broadcast in one flow.</p>
+    </div>
+
+    <div class="section" id="low-level">
+      <h2>Low-Level Building Blocks</h2>
+      <p>If you need manual control, the SDK also exposes the lower-level primitives used by the high-level helper.</p>
+      <div class="pre-header">TypeScript</div>
+      <pre>import {
+  TxmRPC,
+  TxmWallet,
+  selectUtxos,
+  buildAndSign,
+} from '@tensorium/sdk';
+
+const rpc = new TxmRPC('https://rpc.tensoriumlabs.com');
+const wallet = TxmWallet.fromPrivateKey(process.env.TXM_PRIVATE_KEY!);
+
+const { utxos } = await rpc.getUtxos(wallet.address);
+const chosen = selectUtxos(utxos, 250_000_000n);
+
+const tx = buildAndSign(wallet, chosen, [
+  { address: 'txm1qdestinationhere...', value_atoms: 250_000_000n },
+]);
+
+const result = await rpc.sendRawTransaction(tx);
+console.log(result.txid);</pre>
+    </div>
+
+    <div class="section" id="ops-notes">
+      <h2>Operational Notes</h2>
+      <ul>
+        <li>Keep private keys client-side. Do not hardcode or commit them.</li>
+        <li>For production apps, proxy RPC through your own backend or rate-limited gateway.</li>
+        <li>Public RPC should be fronted by nginx or another reverse proxy with method and rate controls.</li>
+        <li>When building wallet UX, show both total UTXO balance and mature spendable balance.</li>
+      </ul>
+    </div>
+
+    <div class="section" id="next">
+      <h2>Next Planned Pieces</h2>
+      <ul>
+        <li>Python SDK for scripting and automation.</li>
+        <li>Simple dApp example using the SDK.</li>
+        <li>Additional fee estimation helpers after the first public app integrations.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('developer.html');</script>
+</body>
+</html>

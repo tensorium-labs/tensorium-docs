@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Guide — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand">
+    <div class="brand-icon">⬡</div>
+    <div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div>
+  </a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      <a href="/">Docs</a><span class="sep">›</span><span class="cur">Mining Guide</span>
+    </div>
+    <div class="topbar-links">
+      <a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a>
+      <a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">⛏ Mining</div>
+      <h1 class="page-title">Mining Guide</h1>
+      <p class="page-desc">Mine TXM on the GPU-first public testnet with the CUDA miner, or use the official pool for simpler payout tracking.</p>
+    </div>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠</span>
+      <div class="callout-body"><strong>Testnet only.</strong> TXM has no monetary value. The chain may be reset before mainnet. Mine to test the software and help find bugs.</div>
+    </div>
+
+    <div class="section" id="requirements">
+      <h2>Requirements</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr></thead>
+        <tbody>
+          <tr><td>OS</td><td>Linux x86_64</td><td>Ubuntu 22.04 / 24.04 LTS</td></tr>
+          <tr><td>CPU</td><td>2 cores</td><td>4+ cores</td></tr>
+          <tr><td>RAM</td><td>512 MB</td><td>2 GB+</td></tr>
+          <tr><td>Disk</td><td>1 GB free</td><td>10 GB+</td></tr>
+          <tr><td>Port</td><td>23333 open (P2P)</td><td>—</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body"><strong>GPU-first testnet is active.</strong> Current public testnet difficulty is 36 bits. CPU mining still works for protocol testing, but practical mining should use <code>txmminer-cuda</code> or the official pool.</div>
+      </div>
+    </div>
+
+    <div class="section" id="pool-mining">
+      <h2>Official Pool Mining</h2>
+      <p>The official/reference pool is live at <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>. Miners connect to the pool RPC endpoint instead of a local node RPC.</p>
+      <div class="pre-header">bash — pool mining</div>
+      <pre>YOUR_ADDRESS="txm1your_address_here"
+
+# CPU miner through pool
+txmminer pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"
+
+# CUDA GPU miner through pool
+txmminer-cuda pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"</pre>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body"><strong>Pool fee disclosure.</strong> The official pool charges a transparent 5% fee at payout accounting level. Gross reward, pool fee, and net miner payout are shown on the pool website. Solo miners can avoid the pool fee by mining directly against their own node.</div>
+      </div>
+
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Pool website</span><span class="param-val"><a href="https://pooltxm.tensoriumlabs.com" target="_blank">https://pooltxm.tensoriumlabs.com</a></span></div>
+        <div class="param-row"><span class="param-key">Miner endpoint</span><span class="param-val"><code>pooltxm.tensoriumlabs.com:23336</code></span></div>
+        <div class="param-row"><span class="param-key">Pool fee</span><span class="param-val">5% / 500 bps</span></div>
+        <div class="param-row"><span class="param-key">Treasury</span><span class="param-val"><code>txm10wa2dazhn2yqwwxkm4aegvzjq55hj9m2jlznt9</code></span></div>
+      </div>
+
+      <h3>Check payout</h3>
+      <p>Open the pool website and paste your miner wallet address in the miner lookup field. The website shows pending net payout and recent accounting entries.</p>
+    </div>
+
+    <div class="section" id="install">
+      <h2>Installation</h2>
+      <h3>One-line installer</h3>
+      <div class="pre-header">bash</div>
+      <pre>curl -fsSL https://raw.githubusercontent.com/rygroup-dev/tensorium-core/main/install.sh | bash</pre>
+      <p>Handles binaries, wallet creation, chain init, seed node sync, and optional systemd setup automatically.</p>
+
+      <h3>Manual download</h3>
+      <div class="pre-header">bash</div>
+      <pre>RELEASE="v0.3.1-mainnet-candidate"
+BASE="https://github.com/rygroup-dev/tensorium-core/releases/download/${RELEASE}"
+
+curl -fsSL -o tensorium-node "${BASE}/tensorium-node-linux-x86_64"
+curl -fsSL -o txmminer        "${BASE}/txmminer-linux-x86_64"
+curl -fsSL -o txmwallet       "${BASE}/txmwallet-linux-x86_64"
+
+chmod +x tensorium-node txmminer txmwallet
+sudo mv tensorium-node txmminer txmwallet /usr/local/bin/</pre>
+    </div>
+
+    <div class="section" id="wallet">
+      <h2>Create a Wallet</h2>
+      <div class="pre-header">bash</div>
+      <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
+export TENSORIUM_WALLET_PASSPHRASE="your-strong-passphrase"
+
+mkdir -p ~/tensorium-node
+txmwallet create
+
+# Get your mining address
+ADDR=$(txmwallet getnewaddress)
+echo "Your address: $ADDR"</pre>
+      <div class="callout callout-danger">
+        <span class="callout-icon">🔑</span>
+        <div class="callout-body"><strong>Back up wallet.json immediately.</strong> Losing this file or your passphrase means losing your funds permanently — no recovery is possible.</div>
+      </div>
+    </div>
+
+    <div class="section" id="node-setup">
+      <h2>Node Setup</h2>
+      <div class="pre-header">bash — init + sync</div>
+      <pre>mkdir -p ~/tensorium-node && cd ~/tensorium-node
+
+# Initialize genesis (~30 seconds at difficulty 26)
+TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+tensorium-node init
+
+# Sync from seed node
+TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+tensorium-node sync 157.230.44.162:23333</pre>
+
+      <div class="pre-header">bash — start RPC + P2P (two terminals or use nohup)</div>
+      <pre># Terminal 1 — RPC (keep on localhost only)
+TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+TENSORIUM_PEERS=157.230.44.162:23333 \
+tensorium-node rpc 127.0.0.1:23332
+
+# Terminal 2 — P2P listener (open to network)
+TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+tensorium-node p2p-listen 0.0.0.0:23333</pre>
+
+      <h3>Auto-start with systemd</h3>
+      <div class="pre-header">bash</div>
+      <pre>sudo tee /etc/systemd/system/tensorium-rpc.service &lt;&lt;EOF
+[Unit]
+Description=Tensorium Node RPC
+After=network.target
+[Service]
+Type=simple
+User=$(whoami)
+Environment=TENSORIUM_STATE=$HOME/tensorium-node/state.json
+Environment=TENSORIUM_MEMPOOL=$HOME/tensorium-node/mempool.json
+Environment=TENSORIUM_BANS=$HOME/tensorium-node/banlist.json
+Environment=TENSORIUM_PEERS=157.230.44.162:23333
+ExecStart=/usr/local/bin/tensorium-node rpc 127.0.0.1:23332
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo tee /etc/systemd/system/tensorium-p2p.service &lt;&lt;EOF
+[Unit]
+Description=Tensorium Node P2P
+After=network.target
+[Service]
+Type=simple
+User=$(whoami)
+Environment=TENSORIUM_STATE=$HOME/tensorium-node/state.json
+Environment=TENSORIUM_MEMPOOL=$HOME/tensorium-node/mempool.json
+Environment=TENSORIUM_BANS=$HOME/tensorium-node/banlist.json
+ExecStart=/usr/local/bin/tensorium-node p2p-listen 0.0.0.0:23333
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now tensorium-rpc tensorium-p2p</pre>
+    </div>
+
+    <div class="section" id="start-mining">
+      <h2>Solo Mining</h2>
+      <div class="pre-header">bash</div>
+      <pre>YOUR_ADDRESS="txm1your_address_here"
+
+# Mine continuously — auto-detects core count
+txmminer 127.0.0.1:23332 "$YOUR_ADDRESS"
+
+# Specify thread count
+txmminer 127.0.0.1:23332 "$YOUR_ADDRESS" 8</pre>
+
+      <h3>CUDA solo mining</h3>
+      <div class="pre-header">bash</div>
+      <pre>YOUR_ADDRESS="txm1your_address_here"
+txmminer-cuda 127.0.0.1:23332 "$YOUR_ADDRESS"</pre>
+
+      <p>Sample output:</p>
+      <pre>txmminer  rpc=127.0.0.1:23332  miner=txm1abc...  threads=8
+Press Ctrl+C to stop.
+
+mining  height=151  bits=26  threads=8  … ✓  height=151  nonce=8432156   7.2s  9.31 MH/s
+mining  height=152  bits=26  threads=8  … ✓  height=152  nonce=52341     0.1s  8.87 MH/s
+mining  height=153  bits=26  threads=8  … ✓  height=153  nonce=71234812 61.3s  9.14 MH/s</pre>
+
+      <h3>Expected hashrate by CPU</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>CPU</th><th>Threads</th><th>Est. Hashrate</th><th>~Block Time (diff 26)</th></tr></thead>
+        <tbody>
+          <tr><td>Basic VPS (1 vCPU)</td><td>1</td><td>1–3 MH/s</td><td>25–70s</td></tr>
+          <tr><td>Mid VPS (4 vCPU)</td><td>4</td><td>5–15 MH/s</td><td>5–15s</td></tr>
+          <tr><td>i5-13600K</td><td>14</td><td>50–100 MH/s</td><td>&lt;2s</td></tr>
+          <tr><td>Ryzen 9 7950X</td><td>16</td><td>80–150 MH/s</td><td>&lt;1s</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Keep miner running persistently</h3>
+      <div class="pre-header">bash — systemd</div>
+      <pre>sudo tee /etc/systemd/system/tensorium-miner.service &lt;&lt;EOF
+[Unit]
+Description=Tensorium CPU Miner
+After=tensorium-rpc.service
+[Service]
+Type=simple
+User=$(whoami)
+ExecStart=/usr/local/bin/txmminer 127.0.0.1:23332 YOUR_TXM_ADDRESS
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable --now tensorium-miner</pre>
+    </div>
+
+    <div class="section" id="rewards">
+      <h2>Rewards</h2>
+      <p>Every block you mine earns <strong>15.23557865 TXM</strong> (Era 1). Rewards require <strong>100 confirmations</strong> (~100 minutes) before they are spendable.</p>
+      <div class="pre-header">bash — check balance</div>
+      <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
+export TENSORIUM_WALLET_PASSPHRASE="your-passphrase"
+export TENSORIUM_STATE=~/tensorium-node/state.json
+
+txmwallet balance</pre>
+      <p>Track your mined blocks on the <a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a> — search your <code>txm1…</code> address.</p>
+    </div>
+
+    <div class="section" id="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">Is testnet TXM worth anything?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">No. Zero monetary value. Testnet exists to test the protocol and find bugs. Do not buy, sell, or trade testnet coins.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need a GPU?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">For practical mining on the current GPU-first testnet, yes. CPU mining remains useful for protocol testing, but difficulty 36 is intended for CUDA/GPU miners.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Genesis init is taking too long — is it stuck?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">Not stuck. At difficulty 26, genesis requires ~67M hash attempts on average. On a basic VPS (1–2 MH/s), this takes 1–3 minutes. On faster hardware it's faster. It will complete.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Balance shows 0 after mining a block?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">Coinbase rewards require 100 block confirmations before they are spendable. Wait for ~100 more blocks, then check again.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">When is GPU mining available?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">GPU mining is available now on the public testnet through <code>txmminer-cuda</code>. The official pool is also live at <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Found a bug. Where to report?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">Open an issue on <a href="https://github.com/rygroup-dev/tensorium-core/issues" target="_blank">GitHub</a>. Include OS, binary version, and steps to reproduce.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('mining.html');</script>
+</body>
+</html>

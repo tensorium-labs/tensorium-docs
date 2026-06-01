@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome Wallet — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Chrome Wallet</span></div>
+    <div class="topbar-links"><a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a><a href="https://github.com/tensorium-labs/tensorium-core" target="_blank">GitHub</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🧩 Chrome Wallet</div>
+      <h1 class="page-title">Chrome Wallet Extension</h1>
+      <p class="page-desc">Manage TXM directly in your browser. No node required — connects to the public Tensorium RPC.</p>
+    </div>
+
+    <div class="section" id="overview">
+      <h2>Overview</h2>
+      <p>The Tensorium Chrome Wallet is a Manifest V3 browser extension that lets you create and manage a TXM wallet without running a local node. Keys are generated and encrypted locally — your private key never leaves your browser.</p>
+
+      <div class="cards" style="margin-top:1.2rem;">
+        <div class="card">
+          <div class="card-title">✅ Features</div>
+          <ul>
+            <li>Create or import wallet</li>
+            <li>View address &amp; balance</li>
+            <li>Send TXM</li>
+            <li>Transaction history</li>
+            <li>Testnet + Mainnet Candidate</li>
+            <li>Export / backup wallet file</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">🔒 Security</div>
+          <ul>
+            <li>secp256k1 ECDSA key generation</li>
+            <li>Argon2id + XChaCha20-Poly1305 at rest</li>
+            <li>Session unlock — no repeated password</li>
+            <li>Compatible with <code>txmwallet</code> CLI</li>
+            <li>No server — keys stay local</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="install">
+      <h2>Install</h2>
+      <p>The extension is currently available as a developer build (unpacked). Chrome Web Store submission is planned after the soak test period.</p>
+
+      <h3>Step 1 — Download the extension</h3>
+      <p>Clone or download the repository from GitHub:</p>
+      <div class="pre-header">bash</div>
+      <pre>git clone https://github.com/tensorium-labs/tensorium-wallet-extension.git
+cd tensorium-wallet-extension
+npm install
+npm run build</pre>
+      <p>This produces a <code>dist/</code> folder — the loadable extension package.</p>
+
+      <h3>Step 2 — Load in Chrome</h3>
+      <ol>
+        <li>Open Chrome and navigate to <code>chrome://extensions</code></li>
+        <li>Enable <strong>Developer mode</strong> (toggle in the top-right corner)</li>
+        <li>Click <strong>Load unpacked</strong></li>
+        <li>Select the <code>dist/</code> folder inside the cloned repo</li>
+        <li>The <strong>Tensorium Wallet</strong> icon will appear in your Chrome toolbar</li>
+      </ol>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Click the puzzle icon (Extensions) in Chrome to pin Tensorium Wallet to your toolbar for quick access.</div>
+      </div>
+    </div>
+
+    <div class="section" id="create">
+      <h2>Create a Wallet</h2>
+      <ol>
+        <li>Click the Tensorium Wallet icon to open the popup</li>
+        <li>Click <strong>Create New Wallet</strong></li>
+        <li>Set a strong password (minimum 8 characters)</li>
+        <li>Confirm your password and click <strong>Create Wallet</strong></li>
+        <li><strong>Download your backup JSON file</strong> — this is required before you can continue</li>
+        <li>Click <strong>I've Saved My Backup — Continue</strong></li>
+      </ol>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body"><strong>There is no recovery service.</strong> If you lose your backup file or forget your password, your funds are permanently unrecoverable. Store your backup in a safe, offline location.</div>
+      </div>
+    </div>
+
+    <div class="section" id="import">
+      <h2>Import an Existing Wallet</h2>
+      <p>You can import a wallet from:</p>
+      <ul>
+        <li><strong>Private key hex</strong> — 64-character hex string from <code>txmwallet</code></li>
+        <li><strong>Wallet JSON file</strong> — the <code>tensorium-wallet.json</code> format produced by <code>txmwallet create</code> or the extension itself</li>
+      </ul>
+      <ol>
+        <li>Open the popup and click <strong>Import Existing Wallet</strong></li>
+        <li>Paste your private key hex or upload a <code>.json</code> wallet file</li>
+        <li>Set a new password (this re-encrypts the key locally)</li>
+        <li>Click <strong>Import Wallet</strong></li>
+      </ol>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">🔄</span>
+        <div class="callout-body">The extension is fully compatible with the <code>txmwallet</code> CLI. Wallet files created by the CLI can be imported here, and vice versa.</div>
+      </div>
+    </div>
+
+    <div class="section" id="send">
+      <h2>Send TXM</h2>
+      <ol>
+        <li>Unlock your wallet and open the Dashboard</li>
+        <li>Click <strong>Send</strong></li>
+        <li>Enter the recipient address (starts with <code>txm1</code>)</li>
+        <li>Enter the amount in TXM</li>
+        <li>Click <strong>Review</strong> to preview the transaction</li>
+        <li>Click <strong>Confirm &amp; Send</strong></li>
+      </ol>
+      <p>The transaction is signed locally with your private key and broadcast to the network via the public RPC. There are no transaction fees.</p>
+    </div>
+
+    <div class="section" id="networks">
+      <h2>Network Selection</h2>
+      <p>The wallet supports multiple networks. Open <strong>Settings</strong> to switch:</p>
+
+      <table>
+        <thead><tr><th>Network</th><th>RPC Endpoint</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-green">Testnet</span></td><td><code>https://rpc.tensoriumlabs.com</code></td><td>Development and testing</td></tr>
+          <tr><td><span class="badge badge-yellow">Mainnet Candidate</span></td><td><code>https://mc-rpc.tensoriumlabs.com</code></td><td>Pre-launch mainnet chain</td></tr>
+          <tr><td><span class="badge badge-purple">Custom</span></td><td>User-defined URL</td><td>Local node or custom RPC</td></tr>
+        </tbody>
+      </table>
+
+      <p>To run a local node and use it with the extension:</p>
+      <div class="pre-header">bash</div>
+      <pre># Start testnet node with public RPC allowed
+TENSORIUM_RPC_ALLOW_PUBLIC=1 tensorium-node rpc 0.0.0.0:23332
+
+# In extension Settings → Custom RPC → http://localhost:23332</pre>
+    </div>
+
+    <div class="section" id="security-model">
+      <h2>Security Model</h2>
+
+      <h3>Key Storage</h3>
+      <p>Your private key is encrypted with <strong>Argon2id</strong> (19 456 KiB memory, 3 iterations) + <strong>XChaCha20-Poly1305</strong> and stored in <code>chrome.storage.local</code>. The plaintext key is never written to disk.</p>
+
+      <h3>Session Unlock</h3>
+      <p>After entering your password, the decrypted key is held in browser memory for the duration of the session. It is cleared automatically when you lock the wallet, close the browser, or the extension suspends.</p>
+
+      <h3>Wallet File Format</h3>
+      <p>The wallet file (<code>.json</code>) is identical to the format produced by the <code>txmwallet</code> CLI:</p>
+      <div class="pre-header">json</div>
+      <pre>{
+  "version": 1,
+  "address": "txm1...",
+  "public_key_hex": "02...",
+  "encrypted_private_key": {
+    "kdf": "argon2id",
+    "kdf_memory_kib": 19456,
+    "kdf_iterations": 3,
+    "kdf_parallelism": 1,
+    "cipher": "xchacha20poly1305",
+    "salt_hex": "...",
+    "nonce_hex": "...",
+    "ciphertext_hex": "..."
+  }
+}</pre>
+
+      <h3>Show Private Key</h3>
+      <p>Go to <strong>Settings → Show Private Key</strong>. You will be asked to re-enter your password. The raw 64-character hex private key is then shown for one-time viewing. Store it securely — never share it.</p>
+    </div>
+
+    <div class="section" id="faq">
+      <h2>FAQ</h2>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">+</span> I forgot my password. Can I recover my wallet?</div>
+        <div class="faq-a">Only if you have your backup <code>.json</code> file. Import it and set a new password. If you have lost both the password and the backup, funds are unrecoverable — there is no server or recovery service.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">+</span> Is the private key ever sent to a server?</div>
+        <div class="faq-a">No. Key generation, encryption, and signing all happen inside your browser. Only signed transactions are broadcast to the RPC.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">+</span> Can I use a wallet file created by txmwallet CLI?</div>
+        <div class="faq-a">Yes. The extension uses the exact same wallet file format. Import it via Settings → Import Wallet → Upload .json file.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">+</span> Why does transaction history only show received TXM?</div>
+        <div class="faq-a">The current history tab scans blocks for outputs matching your address. Full outgoing detection requires a dedicated indexer, which is planned for Phase 9B. Your sent transactions are still confirmed on-chain — check the explorer for full history.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">+</span> Will this be on the Chrome Web Store?</div>
+        <div class="faq-a">Yes, after the mainnet-candidate soak test is complete and the chain is stable. Until then, use the developer build via Load Unpacked.</div>
+      </div>
+    </div>
+
+    <div class="section" id="source">
+      <h2>Source Code</h2>
+      <p>The extension is open source under the Apache-2.0 license.</p>
+      <a class="btn" href="https://github.com/tensorium-labs/tensorium-wallet-extension" target="_blank">View on GitHub ↗</a>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /layout -->
+<script src="/js/nav.js"></script>
+<script>buildSidebar('chrome-wallet.html'); setupScrollSpy();</script>
+</body>
+</html>

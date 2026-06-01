@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPC API — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">RPC API</span></div>
+    <div class="topbar-links"><a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a><a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🔌 RPC</div>
+      <h1 class="page-title">RPC API Reference</h1>
+      <p class="page-desc">The node exposes a simple HTTP JSON API on <code>127.0.0.1:23332</code>. Use it for wallets, miners, explorers, automation, and the official <code>@tensorium/sdk</code> package.</p>
+    </div>
+
+    <div class="callout callout-danger">
+      <span class="callout-icon">⚠</span>
+      <div class="callout-body"><strong>Localhost only.</strong> Bind RPC to <code>127.0.0.1</code> — never expose port 23332 to the internet. There is no authentication.</div>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body"><strong>Public RPC operators.</strong> If you intentionally expose RPC with <code>TENSORIUM_RPC_ALLOW_PUBLIC=1</code>, place nginx or another reverse proxy in front with per-IP rate limits, connection limits, and a GET/POST method whitelist.</div>
+    </div>
+
+    <div class="section" id="overview">
+      <h2>Endpoint Overview</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Path</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>GET</code></td><td><code>/health</code></td><td>Basic liveness check</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getblockcount</code></td><td>Current height, block count, chain ID</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getdifficulty</code></td><td>Current leading-zero difficulty target</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getblock/&lt;height&gt;</code></td><td>Full block payload by height</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getblocktemplate/&lt;miner_address&gt;</code></td><td>Mining candidate block template</td></tr>
+            <tr><td><code>POST</code></td><td><code>/submitblock</code></td><td>Submit a mined block</td></tr>
+            <tr><td><code>POST</code></td><td><code>/sendrawtransaction</code></td><td>Validate and pool a signed transaction</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getmempoolinfo</code></td><td>Pending tx count and txids</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getbanlist</code></td><td>Inspect peer ban state</td></tr>
+            <tr><td><code>GET</code></td><td><code>/unban/&lt;ip&gt;</code></td><td>Remove an IP from the ban list</td></tr>
+            <tr><td><code>GET</code></td><td><code>/getutxos/&lt;address&gt;</code></td><td>List all address UTXOs with maturity flag</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="health">
+      <h2>GET /health</h2>
+      <p>Check if the node is running.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/health</pre>
+      <div class="pre-header">response</div>
+      <pre>{"ok": true}</pre>
+    </div>
+
+    <div class="section" id="getblockcount">
+      <h2>GET /getblockcount</h2>
+      <p>Return current chain height and total block count.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/getblockcount</pre>
+      <div class="pre-header">response</div>
+      <pre>{"blocks": 151, "chain_id": "tensorium-testnet-0", "height": 150}</pre>
+    </div>
+
+    <div class="section" id="getdifficulty">
+      <h2>GET /getdifficulty</h2>
+      <p>Return current difficulty (leading zero bits required).</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/getdifficulty</pre>
+      <div class="pre-header">response</div>
+      <pre>{"chain_id": "tensorium-testnet-0", "height": 150, "leading_zero_bits": 26}</pre>
+    </div>
+
+    <div class="section" id="getblock">
+      <h2>GET /getblock/:height</h2>
+      <p>Return full block data at the given height. Hashes are returned as byte arrays — convert to hex for display.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/getblock/0     # genesis
+curl http://localhost:23332/getblock/100</pre>
+      <div class="pre-header">response (abbreviated)</div>
+      <pre>{
+  "block": {
+    "header": {
+      "chain_id": "tensorium-testnet-0",
+      "height": 0,
+      "leading_zero_bits": 26,
+      "nonce": 95202247,
+      "previous_hash": [0, 0, ...],   // byte array → convert to hex
+      "merkle_root":   [33, 214, ...],
+      "timestamp_seconds": 1748649600,
+      "version": 1
+    },
+    "transactions": [{
+      "id":      [...],               // txid as byte array
+      "inputs":  [],                  // empty for coinbase
+      "outputs": [{"address": "txm1...", "value_atoms": 1523557865}],
+      "payload": [...]                // coinbase data as bytes
+    }]
+  },
+  "hash": [0, 0, 0, 53, ...]          // block hash as byte array
+}</pre>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body"><strong>Byte arrays.</strong> Hashes and transaction IDs are returned as <code>[u8; 32]</code> JSON arrays. Convert to hex with: <code>arr.map(b => b.toString(16).padStart(2,'0')).join('')</code></div>
+      </div>
+    </div>
+
+    <div class="section" id="getblocktemplate">
+      <h2>GET /getblocktemplate/:miner_address</h2>
+      <p>Return a candidate block for mining. Includes pending mempool transactions. Used by <code>txmminer</code>.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/getblocktemplate/txm1youraddress</pre>
+      <div class="pre-header">response</div>
+      <pre>{
+  "template": {
+    "header": { "height": 151, "leading_zero_bits": 26, "nonce": 0, ... },
+    "transactions": [...]
+  }
+}</pre>
+      <p>The miner must set the <code>nonce</code> field to find a valid block hash, then submit via <code>/submitblock</code>.</p>
+    </div>
+
+    <div class="section" id="submitblock">
+      <h2>POST /submitblock</h2>
+      <p>Submit a mined block. Validates PoW, appends to chain, broadcasts to peers, and clears confirmed transactions from mempool.</p>
+      <div class="pre-header">request</div>
+      <pre>curl -X POST http://localhost:23332/submitblock \
+  -H "Content-Type: application/json" \
+  -d '{ "header": {..., "nonce": 95202247}, "transactions": [...] }'</pre>
+      <div class="pre-header">response — accepted</div>
+      <pre>{"accepted": true, "height": 151, "hash": [...], "canonical": true}</pre>
+      <div class="pre-header">response — rejected</div>
+      <pre>{"error": "block's parent is not known"}</pre>
+    </div>
+
+    <div class="section" id="sendrawtransaction">
+      <h2>POST /sendrawtransaction</h2>
+      <p>Submit a signed transaction to the mempool. Validates, pools, and broadcasts to peers.</p>
+      <div class="pre-header">request</div>
+      <pre>curl -X POST http://localhost:23332/sendrawtransaction \
+  -H "Content-Type: application/json" \
+  -d '{"id":[...],"inputs":[...],"outputs":[...],"payload":[]}'</pre>
+      <div class="pre-header">response</div>
+      <pre>{"accepted": true, "txid": [...], "mempool_size": 3}</pre>
+    </div>
+
+    <div class="section" id="getmempoolinfo">
+      <h2>GET /getmempoolinfo</h2>
+      <p>Return current mempool contents.</p>
+      <div class="pre-header">response</div>
+      <pre>{"count": 2, "txids": [[...], [...]]}</pre>
+    </div>
+
+    <div class="section" id="getbanlist">
+      <h2>GET /getbanlist</h2>
+      <p>Return currently banned peers.</p>
+      <div class="pre-header">response</div>
+      <pre>{"count": 1, "entries": [{"ip": "1.2.3.4", "score": 100, "banned": true, "secs_remaining": 1234}]}</pre>
+    </div>
+
+    <div class="section" id="unban">
+      <h2>GET /unban/:ip</h2>
+      <p>Remove an IP from the ban list.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/unban/1.2.3.4</pre>
+      <div class="pre-header">response</div>
+      <pre>{"unbanned": "1.2.3.4", "was_present": true}</pre>
+    </div>
+
+    <div class="section" id="getutxos">
+      <h2>GET /getutxos/:address</h2>
+      <p>Return all known UTXOs for an address, including maturity information for coinbase outputs.</p>
+      <div class="pre-header">request</div>
+      <pre>curl http://localhost:23332/getutxos/txm1qyouraddresshere</pre>
+      <div class="pre-header">response</div>
+      <pre>{
+  "address": "txm1qyouraddresshere",
+  "tip_height": 150,
+  "utxo_count": 2,
+  "utxos": [
+    {
+      "txid": "0d4d...",
+      "txid_bytes": [13, 77, ...],
+      "output_index": 0,
+      "value_atoms": 250000000,
+      "coinbase": false,
+      "created_height": 149,
+      "mature": true
+    }
+  ]
+}</pre>
+      <p>This is the endpoint used by <code>@tensorium/sdk</code> when deriving spendable balance.</p>
+    </div>
+
+    <div class="section" id="status-codes">
+      <h2>Status Codes And Errors</h2>
+      <ul>
+        <li><code>200</code>: request accepted and JSON body returned.</li>
+        <li><code>400</code>: malformed body or invalid RPC input.</li>
+        <li><code>404</code>: unknown endpoint or missing resource such as block height.</li>
+        <li>Validation failures are returned as JSON objects with an <code>error</code> field.</li>
+      </ul>
+    </div>
+
+    <div class="section" id="sdk">
+      <h2>SDK Shortcut</h2>
+      <p>If you do not want to handcraft raw HTTP requests, use the official JavaScript SDK.</p>
+      <div class="pre-header">npm</div>
+      <pre>npm install @tensorium/sdk</pre>
+      <div class="pre-header">TypeScript</div>
+      <pre>import { TxmRPC } from '@tensorium/sdk';
+
+const rpc = new TxmRPC('https://rpc.tensoriumlabs.com');
+const info = await rpc.getBlockCount();
+console.log(info.height, info.chain_id);</pre>
+      <p>See the <a href="/developer.html">Developer Guide</a> for balance, signing, and send examples.</p>
+    </div>
+
+    <div class="section" id="rate-limit">
+      <h2>Rate Limit Notes</h2>
+      <p>The node RPC server is intentionally single-threaded. Localhost use is fine, but public operators should treat it as a protected backend, not as a raw internet-facing API.</p>
+      <ul>
+        <li>Default safe bind: <code>127.0.0.1:23332</code></li>
+        <li>Public bind requires <code>TENSORIUM_RPC_ALLOW_PUBLIC=1</code></li>
+        <li>Put nginx in front with <code>limit_req</code> and <code>limit_conn</code></li>
+        <li>Whitelist only <code>GET</code> and <code>POST</code></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('rpc.html');</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Parameters — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Network Params</span></div>
+    <div class="topbar-links"><a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🌐 Network</div>
+      <h1 class="page-title">Network Parameters</h1>
+      <p class="page-desc">Consensus parameters, genesis block, ports, and chain constants for the Tensorium testnet.</p>
+    </div>
+
+    <div class="section" id="chain">
+      <h2>Chain Parameters</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-testnet-0</code></span></div>
+        <div class="param-row"><span class="param-key">Ticker</span><span class="param-val">TXM</span></div>
+        <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256, same as Bitcoin)</span></div>
+        <div class="param-row"><span class="param-key">Target Block Time</span><span class="param-val">60 seconds</span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">26 leading zero bits (~67M hashes/block)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">20 bits</span></div>
+        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">40 bits</span></div>
+        <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">60 blocks, ±1 bit max per window</span></div>
+        <div class="param-row"><span class="param-key">Coinbase Maturity</span><span class="param-val">100 blocks before reward is spendable</span></div>
+        <div class="param-row"><span class="param-key">Max Future Timestamp</span><span class="param-val">+2 hours from local time</span></div>
+      </div>
+    </div>
+
+    <div class="section" id="genesis">
+      <h2>Genesis Block</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Hash</span><span class="param-val"><code style="font-size:11px;word-break:break-all">00000035d8a99c0900fec5daa3ef5a7c2d71c7140e473d239a24b0dd4cd7f6c3</code></span></div>
+        <div class="param-row"><span class="param-key">Height</span><span class="param-val">0</span></div>
+        <div class="param-row"><span class="param-key">Timestamp</span><span class="param-val"><code>1748649600</code> — 2025-05-30 16:00:00 UTC</span></div>
+        <div class="param-row"><span class="param-key">Nonce</span><span class="param-val">95,202,247</span></div>
+        <div class="param-row"><span class="param-key">Difficulty</span><span class="param-val">26 bits</span></div>
+      </div>
+    </div>
+
+    <div class="section" id="tokenomics">
+      <h2>Tokenomics</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Max Supply</span><span class="param-val">33,000,000 TXM</span></div>
+        <div class="param-row"><span class="param-key">Mining Allocation</span><span class="param-val">32,000,000 TXM (96.97%)</span></div>
+        <div class="param-row"><span class="param-key">Founder Allocation</span><span class="param-val">1,000,000 TXM (3.03%)</span></div>
+        <div class="param-row"><span class="param-key">Era 1 Block Reward</span><span class="param-val">15.23557865 TXM (1,523,557,865 atoms)</span></div>
+        <div class="param-row"><span class="param-key">1 TXM</span><span class="param-val">100,000,000 atoms</span></div>
+        <div class="param-row"><span class="param-key">Halving Interval</span><span class="param-val">1,051,200 blocks (~2 years at 60s/block)</span></div>
+        <div class="param-row"><span class="param-key">Total Eras</span><span class="param-val">10 (~20 years, then fee-only)</span></div>
+      </div>
+    </div>
+
+    <div class="section" id="ports">
+      <h2>Ports</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Port</th><th>Protocol</th><th>Service</th><th>Exposure</th></tr></thead>
+        <tbody>
+          <tr><td><strong>23333</strong></td><td>TCP</td><td>P2P networking</td><td>Open in firewall (public)</td></tr>
+          <tr><td><strong>23332</strong></td><td>TCP/HTTP</td><td>RPC API</td><td>Localhost only — never expose</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="section" id="seed">
+      <h2>Seed Node</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">P2P</span><span class="param-val"><code>157.230.44.162:23333</code></span></div>
+        <div class="param-row"><span class="param-key">Operator</span><span class="param-val">Tensorium Labs</span></div>
+        <div class="param-row"><span class="param-key">Usage</span><span class="param-val">Set <code>TENSORIUM_PEERS=157.230.44.162:23333</code> for block propagation. Use for initial sync.</span></div>
+      </div>
+    </div>
+
+    <div class="section" id="mainnet">
+      <h2>Mainnet Candidate Parameters (Planned)</h2>
+      <p>Not final — will be locked before mainnet launch.</p>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">36 bits (~68B hashes/block, GPU required)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">28 bits</span></div>
+        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">56 bits</span></div>
+        <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">120 blocks</span></div>
+      </div>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">Mainnet will not launch until Phase 6 (GPU testnet) is stable, a security audit is complete, and all parameters are publicly reviewed. See the <a href="https://whitepaper.tensoriumlabs.com/#roadmap" target="_blank">Roadmap</a>.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('network.html');</script>
+</body>
+</html>

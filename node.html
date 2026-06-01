@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running a Node — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Running a Node</span></div>
+    <div class="topbar-links"><a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a><a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">⬡ Node</div>
+      <h1 class="page-title">Running a Node</h1>
+      <p class="page-desc">Set up a full Tensorium node: init the chain, sync from peers, run RPC and P2P services.</p>
+    </div>
+
+    <div class="section" id="overview">
+      <h2>Overview</h2>
+      <p>A full node validates every block, maintains the complete chain state, serves the RPC API to miners and wallets, and participates in P2P block/transaction propagation. Running a node strengthens the network.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Service</th><th>Default Bind</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>tensorium-node rpc</code></td><td><code>127.0.0.1:23332</code></td><td>HTTP RPC — miner, wallet, and app integration</td></tr>
+          <tr><td><code>tensorium-node p2p-listen</code></td><td><code>0.0.0.0:23333</code></td><td>P2P — receive blocks and transactions from peers</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body"><strong>Never expose RPC publicly.</strong> Bind <code>tensorium-node rpc</code> to <code>127.0.0.1</code> only. The RPC has no authentication — anyone with access can submit arbitrary blocks. Open port <strong>23333</strong> (P2P) in your firewall, but keep 23332 (RPC) closed.</div>
+      </div>
+    </div>
+
+    <div class="section" id="init">
+      <h2>1. Initialize the Chain</h2>
+      <div class="pre-header">bash</div>
+      <pre>mkdir -p ~/tensorium-node
+
+TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+TENSORIUM_NODE_ID=my-node \
+tensorium-node init</pre>
+      <p>This mines the genesis block locally (~30s at difficulty 26). All nodes produce the identical genesis because the timestamp is hardcoded:</p>
+      <pre>chain_id=tensorium-testnet-0  height=0
+hash=00000035d8a99c0900fec5daa3ef5a7c2d71c7140e473d239a24b0dd4cd7f6c3</pre>
+    </div>
+
+    <div class="section" id="sync">
+      <h2>2. Sync the Chain</h2>
+      <div class="pre-header">bash</div>
+      <pre>TENSORIUM_STATE=~/tensorium-node/state.json \
+TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
+TENSORIUM_BANS=~/tensorium-node/banlist.json \
+tensorium-node sync 157.230.44.162:23333</pre>
+      <p>Pulls all missing blocks from the seed node in batches of 50. Re-run any time to catch up after downtime.</p>
+    </div>
+
+    <div class="section" id="run">
+      <h2>3. Run Services</h2>
+      <div class="pre-header">bash — nohup (quick start)</div>
+      <pre>STATE=~/tensorium-node/state.json
+MEMPOOL=~/tensorium-node/mempool.json
+BANS=~/tensorium-node/banlist.json
+
+nohup bash -c "TENSORIUM_STATE=$STATE TENSORIUM_MEMPOOL=$MEMPOOL \
+  TENSORIUM_BANS=$BANS TENSORIUM_PEERS=157.230.44.162:23333 \
+  tensorium-node rpc 127.0.0.1:23332" > ~/tensorium-node/rpc.log 2>&1 &
+
+nohup bash -c "TENSORIUM_STATE=$STATE TENSORIUM_MEMPOOL=$MEMPOOL \
+  TENSORIUM_BANS=$BANS \
+  tensorium-node p2p-listen 0.0.0.0:23333" > ~/tensorium-node/p2p.log 2>&1 &
+
+echo "Node running. Check: curl http://localhost:23332/health"</pre>
+
+      <h3>Verify</h3>
+      <pre>curl -s http://localhost:23332/health
+# {"ok":true}
+
+curl -s http://localhost:23332/getblockcount
+# {"blocks":N,"chain_id":"tensorium-testnet-0","height":N-1}</pre>
+    </div>
+
+    <div class="section" id="systemd">
+      <h2>4. Systemd (Production)</h2>
+      <div class="pre-header">bash</div>
+      <pre>USER=$(whoami)
+HOME_DIR=$HOME
+
+sudo tee /etc/systemd/system/tensorium-rpc.service &lt;&lt;EOF
+[Unit]
+Description=Tensorium Node RPC
+After=network.target
+[Service]
+Type=simple
+User=${USER}
+Environment=TENSORIUM_STATE=${HOME_DIR}/tensorium-node/state.json
+Environment=TENSORIUM_MEMPOOL=${HOME_DIR}/tensorium-node/mempool.json
+Environment=TENSORIUM_BANS=${HOME_DIR}/tensorium-node/banlist.json
+Environment=TENSORIUM_PEERS=157.230.44.162:23333
+ExecStart=/usr/local/bin/tensorium-node rpc 127.0.0.1:23332
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo tee /etc/systemd/system/tensorium-p2p.service &lt;&lt;EOF
+[Unit]
+Description=Tensorium Node P2P
+After=network.target
+[Service]
+Type=simple
+User=${USER}
+Environment=TENSORIUM_STATE=${HOME_DIR}/tensorium-node/state.json
+Environment=TENSORIUM_MEMPOOL=${HOME_DIR}/tensorium-node/mempool.json
+Environment=TENSORIUM_BANS=${HOME_DIR}/tensorium-node/banlist.json
+ExecStart=/usr/local/bin/tensorium-node p2p-listen 0.0.0.0:23333
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now tensorium-rpc tensorium-p2p
+
+# Check status
+sudo systemctl status tensorium-rpc tensorium-p2p</pre>
+    </div>
+
+    <div class="section" id="commands">
+      <h2>Node Commands Reference</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>tensorium-node init</code></td><td>Mine and save the genesis block</td></tr>
+          <tr><td><code>tensorium-node status</code></td><td>Print current chain tip and height</td></tr>
+          <tr><td><code>tensorium-node rpc [bind]</code></td><td>Start HTTP RPC server (default 127.0.0.1:23332)</td></tr>
+          <tr><td><code>tensorium-node p2p-listen [bind]</code></td><td>Start P2P server (default 0.0.0.0:23333)</td></tr>
+          <tr><td><code>tensorium-node sync [peer]</code></td><td>Pull missing blocks from a peer</td></tr>
+          <tr><td><code>tensorium-node p2p-connect &lt;peer&gt;</code></td><td>Diagnostic handshake (check connectivity)</td></tr>
+          <tr><td><code>tensorium-node peers</code></td><td>Print configured TENSORIUM_PEERS</td></tr>
+          <tr><td><code>tensorium-node banlist</code></td><td>Show peer ban list</td></tr>
+          <tr><td><code>tensorium-node unban &lt;ip&gt;</code></td><td>Remove an IP from ban list</td></tr>
+          <tr><td><code>tensorium-node mainnet-candidate init</code></td><td>Initialize the mainnet-candidate chain with the hardcoded genesis nonce</td></tr>
+          <tr><td><code>tensorium-node mainnet-candidate rpc 127.0.0.1:33332</code></td><td>Start mainnet-candidate RPC on localhost</td></tr>
+          <tr><td><code>tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</code></td><td>Start mainnet-candidate P2P listener</td></tr>
+          <tr><td><code>tensorium-node mainnet-candidate sync &lt;peer&gt;</code></td><td>Sync mainnet-candidate blocks from a peer</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="section" id="mainnet-candidate">
+      <h2>Mainnet-Candidate Node</h2>
+      <p>Mainnet-candidate code is complete in <code>v0.3.1-mainnet-candidate</code>, but the chain is not publicly launched yet. Use these commands only for pre-launch validation and soak testing.</p>
+      <div class="pre-header">bash — mainnet-candidate local run</div>
+      <pre>mkdir -p ~/tensorium-mc
+
+TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
+TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
+TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
+tensorium-node mainnet-candidate init
+
+TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
+TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
+TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
+tensorium-node mainnet-candidate rpc 127.0.0.1:33332
+
+TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
+TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
+TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
+tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
+
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
+        <div class="param-row"><span class="param-key">P2P / RPC</span><span class="param-val"><code>33333</code> public P2P, <code>33332</code> localhost RPC</span></div>
+        <div class="param-row"><span class="param-key">Genesis nonce</span><span class="param-val"><code>56_167_663_277</code></span></div>
+        <div class="param-row"><span class="param-key">Genesis hash</span><span class="param-val"><code>0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</code></span></div>
+      </div>
+    </div>
+
+    <div class="section" id="env">
+      <h2>Environment Variables</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">TENSORIUM_STATE</span><span class="param-val">Chain state file path. Default: <code>tensorium-testnet-state.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_MEMPOOL</span><span class="param-val">Mempool file path. Default: <code>tensorium-testnet-mempool.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_BANS</span><span class="param-val">Peer ban list file. Default: <code>tensorium-testnet-banlist.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_PEERS</span><span class="param-val">Comma-separated peers for block/tx broadcast. Example: <code>157.230.44.162:23333</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_NODE_ID</span><span class="param-val">Node identity shown in P2P handshake. Default: <code>node-&lt;timestamp&gt;</code></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('node.html');</script>
+</body>
+</html>

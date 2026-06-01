@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet — Tensorium Docs</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">v0.3.1-mainnet-candidate</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Wallet</span></div>
+    <div class="topbar-links"><a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a><a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a></div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">💳 Wallet</div>
+      <h1 class="page-title">Wallet Guide</h1>
+      <p class="page-desc">Create and manage a TXM wallet. Generate addresses, check balance, and send transactions.</p>
+    </div>
+
+    <div class="section" id="security">
+      <h2>Security Model</h2>
+      <p>Private keys are generated locally using <strong>secp256k1</strong> ECDSA and encrypted at rest with <strong>Argon2id + ChaCha20-Poly1305</strong>. Keys are never transmitted over the network.</p>
+      <div class="callout callout-danger">
+        <span class="callout-icon">🔑</span>
+        <div class="callout-body"><strong>Self-custody.</strong> There is no recovery service. If you lose <code>wallet.json</code> or forget your passphrase, funds are unrecoverable. Back up both immediately after creation.</div>
+      </div>
+    </div>
+
+    <div class="section" id="create">
+      <h2>Create a Wallet</h2>
+      <div class="pre-header">bash</div>
+      <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
+export TENSORIUM_WALLET_PASSPHRASE="your-strong-passphrase"
+
+txmwallet create</pre>
+      <p>Output:</p>
+      <pre>address=txm1abc123xyz...
+public_key=02ab34...
+wallet_version=2
+encrypted=true</pre>
+
+      <h3>Get your address</h3>
+      <pre>txmwallet getnewaddress
+# → txm1abc123xyz...</pre>
+
+      <h3>Backup</h3>
+      <pre>cp ~/tensorium-node/wallet.json ~/wallet-backup-$(date +%Y%m%d).json
+
+# Verify backup is readable
+TENSORIUM_WALLET=~/wallet-backup-*.json \
+TENSORIUM_WALLET_PASSPHRASE="your-passphrase" \
+txmwallet unlock-check</pre>
+    </div>
+
+    <div class="section" id="balance">
+      <h2>Check Balance</h2>
+      <div class="pre-header">bash</div>
+      <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
+export TENSORIUM_WALLET_PASSPHRASE="your-passphrase"
+export TENSORIUM_STATE=~/tensorium-node/state.json
+
+txmwallet balance</pre>
+      <p>Shows mature (spendable) and immature (pending maturity) balances separately. Mining rewards become spendable after <strong>100 confirmations</strong>.</p>
+    </div>
+
+    <div class="section" id="send">
+      <h2>Send a Transaction</h2>
+      <div class="pre-header">bash — build, sign, and broadcast</div>
+      <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
+export TENSORIUM_WALLET_PASSPHRASE="your-passphrase"
+export TENSORIUM_STATE=~/tensorium-node/state.json
+
+# Build and sign (1 TXM = 100,000,000 atoms)
+txmwallet send txm1recipient_address 100000000 /tmp/tx.json
+
+# Broadcast to node
+txmwallet broadcast /tmp/tx.json 127.0.0.1:23332</pre>
+      <p>Transaction will propagate to peers via P2P and be confirmed in the next block.</p>
+    </div>
+
+    <div class="section" id="commands-ref">
+      <h2>Commands Reference</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>txmwallet create</code></td><td>Generate keypair and save encrypted wallet</td></tr>
+          <tr><td><code>txmwallet getnewaddress</code></td><td>Print wallet address (<code>txm1…</code>)</td></tr>
+          <tr><td><code>txmwallet show</code></td><td>Print public wallet info (address, pubkey)</td></tr>
+          <tr><td><code>txmwallet balance</code></td><td>Scan chain state for wallet UTXOs</td></tr>
+          <tr><td><code>txmwallet send &lt;to&gt; &lt;atoms&gt; [file]</code></td><td>Build and sign a transaction</td></tr>
+          <tr><td><code>txmwallet broadcast [file] [rpc]</code></td><td>Submit signed tx to node RPC</td></tr>
+          <tr><td><code>txmwallet unlock-check</code></td><td>Verify passphrase can decrypt wallet</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="section" id="units">
+      <h2>Units</h2>
+      <div class="param-table">
+        <div class="param-row"><span class="param-key">1 TXM</span><span class="param-val">100,000,000 atoms</span></div>
+        <div class="param-row"><span class="param-key">0.00000001 TXM</span><span class="param-val">1 atom (smallest unit)</span></div>
+        <div class="param-row"><span class="param-key">Block reward</span><span class="param-val">1,523,557,865 atoms = 15.23557865 TXM</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('wallet.html');</script>
+</body>
+</html>
