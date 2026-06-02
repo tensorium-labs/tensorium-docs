@@ -17,7 +17,7 @@
     <div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div>
   </a>
   <nav class="sidebar-nav"></nav>
-  <div class="sidebar-footer">v0.3.1-mainnet-candidate · <a href="https://github.com/rygroup-dev/tensorium-core/releases" target="_blank">Changelog</a></div>
+  <div class="sidebar-footer">public testnet + mainnet-candidate prep · <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">Changelog</a></div>
 </aside>
 
 <div class="main">
@@ -26,7 +26,7 @@
     <div class="topbar-links">
       <a href="https://whitepaper.tensoriumlabs.com" target="_blank">Whitepaper</a>
       <a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a>
-      <a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a>
+      <a href="https://github.com/tensorium-labs/tensorium-core" target="_blank">GitHub</a>
     </div>
   </div>
 
@@ -81,7 +81,7 @@
         <div class="card-title">Network Params</div>
         <div class="card-desc">Chain ID, ports, genesis hash, difficulty settings, and consensus parameters.</div>
       </a>
-      <a href="https://github.com/rygroup-dev/tensorium-core/blob/main/RISK_DISCLOSURE.md" class="card" target="_blank">
+      <a href="https://github.com/tensorium-labs/tensorium-core/blob/main/RISK_DISCLOSURE.md" class="card" target="_blank">
         <div class="card-icon">⚖</div>
         <div class="card-title">Risk Disclosure ↗</div>
         <div class="card-desc">Founder allocation, pool fee, technical risks, and pre-launch limitations.</div>
@@ -99,7 +99,7 @@
       <p>Get mining in under 5 minutes on Linux x86_64.</p>
 
       <div class="pre-header">bash — one-line installer</div>
-      <pre>curl -fsSL https://raw.githubusercontent.com/rygroup-dev/tensorium-core/main/install.sh | bash</pre>
+      <pre>curl -fsSL https://raw.githubusercontent.com/tensorium-labs/tensorium-core/main/install.sh | bash</pre>
 
       <p>The installer handles everything: downloads binaries, creates a wallet, inits the chain, syncs from the seed node, and optionally sets up systemd services.</p>
 
@@ -109,7 +109,7 @@
           <div class="step-num">1</div>
           <div class="step-content">
             <div class="step-title">Download binaries</div>
-            <div class="step-desc">Get <code>tensorium-node</code>, <code>txmminer</code>, and <code>txmwallet</code> from <a href="https://github.com/rygroup-dev/tensorium-core/releases" target="_blank">GitHub Releases</a>.</div>
+            <div class="step-desc">Get <code>tensorium-node</code>, <code>txmminer</code>, and <code>txmwallet</code> from <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">GitHub Releases</a>.</div>
           </div>
         </div>
         <div class="step">
@@ -148,8 +148,8 @@
         <div class="param-row"><span class="param-key">Block Reward (Era 1)</span><span class="param-val">15.23557865 TXM</span></div>
         <div class="param-row"><span class="param-key">Max Supply</span><span class="param-val">33,000,000 TXM (32M mining + 1M founder)</span></div>
         <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256)</span></div>
-        <div class="param-row"><span class="param-key">Testnet Difficulty</span><span class="param-val">36 bits GPU-first public testnet</span></div>
-        <div class="param-row"><span class="param-key">MC Genesis Hash</span><span class="param-val"><code>0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</code></span></div>
+        <div class="param-row"><span class="param-key">Testnet Difficulty</span><span class="param-val">20-bit CPU-friendly onboarding testnet (reset 2026-06-01)</span></div>
+        <div class="param-row"><span class="param-key">MC Genesis Hash</span><span class="param-val"><code>000000000063ab6f057a16376b1712e709719126ad977a3d4be23f83b89f0392</code></span></div>
         <div class="param-row"><span class="param-key">P2P Port</span><span class="param-val">23333 (open in firewall)</span></div>
         <div class="param-row"><span class="param-key">RPC Port</span><span class="param-val">23332 (localhost only)</span></div>
         <div class="param-row"><span class="param-key">Seed Node</span><span class="param-val"><code>157.230.44.162:23333</code></span></div>
@@ -160,26 +160,26 @@
     <!-- Binaries -->
     <div class="section" id="binaries">
       <h2>Latest Release</h2>
-      <p>Current version: <strong>v0.3.1-mainnet-candidate</strong> · <a href="https://github.com/rygroup-dev/tensorium-core/releases" target="_blank">View all releases ↗</a></p>
+      <p>Current public release track: <strong>v0.2.0-testnet</strong> for testnet onboarding, with <strong>v0.3.1-mainnet-candidate</strong> reserved for pre-launch validation. <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">View all releases ↗</a></p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Binary</th><th>Platform</th><th>Download</th></tr></thead>
           <tbody>
             <tr>
               <td><code>tensorium-node</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/rygroup-dev/tensorium-core/releases/download/v0.3.1-mainnet-candidate/tensorium-node-linux-x86_64" target="_blank">tensorium-node-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/tensorium-node-linux-x86_64" target="_blank">tensorium-node-linux-x86_64</a></td>
             </tr>
             <tr>
               <td><code>txmminer</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/rygroup-dev/tensorium-core/releases/download/v0.3.1-mainnet-candidate/txmminer-linux-x86_64" target="_blank">txmminer-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/txmminer-linux-x86_64" target="_blank">txmminer-linux-x86_64</a></td>
             </tr>
             <tr>
               <td><code>txmminer-cuda</code></td><td>Linux x86_64 / NVIDIA CUDA</td>
-              <td><a href="https://github.com/rygroup-dev/tensorium-core/releases" target="_blank">txmminer-cuda release assets</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">txmminer-cuda release assets</a></td>
             </tr>
             <tr>
               <td><code>txmwallet</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/rygroup-dev/tensorium-core/releases/download/v0.3.1-mainnet-candidate/txmwallet-linux-x86_64" target="_blank">txmwallet-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/txmwallet-linux-x86_64" target="_blank">txmwallet-linux-x86_64</a></td>
             </tr>
           </tbody>
         </table>

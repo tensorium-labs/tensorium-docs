@@ -23,7 +23,7 @@
     <div class="page-header">
       <div class="page-tag">🧩 Chrome Wallet</div>
       <h1 class="page-title">Chrome Wallet Extension</h1>
-      <p class="page-desc">Manage TXM directly in your browser. No node required — connects to the public Tensorium RPC.</p>
+      <p class="page-desc">Manage TXM directly in your browser. No local node required for normal use — the wallet connects to public Tensorium RPC endpoints and keeps keys encrypted in the extension.</p>
     </div>
 
     <div class="section" id="overview">
@@ -57,7 +57,7 @@
 
     <div class="section" id="install">
       <h2>Install</h2>
-      <p>The extension is currently available as a developer build (unpacked). Chrome Web Store submission is planned after the soak test period.</p>
+      <p>The extension is currently available as a developer build (unpacked). Chrome Web Store submission materials are now prepared, including listing copy, support docs, and privacy policy. Final store upload still depends on the developer dashboard step.</p>
 
       <h3>Step 1 — Download the extension</h3>
       <p>Clone or download the repository from GitHub:</p>
@@ -80,6 +80,11 @@ npm run build</pre>
       <div class="callout callout-info">
         <span class="callout-icon">💡</span>
         <div class="callout-body">Click the puzzle icon (Extensions) in Chrome to pin Tensorium Wallet to your toolbar for quick access.</div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">🧾</span>
+        <div class="callout-body">For Chrome Web Store review and user support, see the hosted <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/wallet-support.html">Wallet Support</a> pages.</div>
       </div>
     </div>
 
@@ -211,7 +216,7 @@ TENSORIUM_RPC_ALLOW_PUBLIC=1 tensorium-node rpc 0.0.0.0:23332
 
       <div class="faq-item">
         <div class="faq-q"><span class="faq-icon">+</span> Will this be on the Chrome Web Store?</div>
-        <div class="faq-a">Yes, after the mainnet-candidate soak test is complete and the chain is stable. Until then, use the developer build via Load Unpacked.</div>
+          <div class="faq-a">Yes. The submission pack is ready, but final publication still depends on manual Chrome Web Store dashboard steps and review timing. Until the listing is approved, use the developer build via Load Unpacked.</div>
       </div>
     </div>
 

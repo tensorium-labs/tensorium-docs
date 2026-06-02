@@ -16,6 +16,7 @@ const NAV = [
       { icon: '⬡', label: 'Running a Node',  href: '/node.html' },
       { icon: '💳', label: 'CLI Wallet',       href: '/wallet.html' },
       { icon: '🧩', label: 'Chrome Wallet',    href: '/chrome-wallet.html' },
+      { icon: '🛟', label: 'Wallet Support',   href: '/wallet-support.html' },
     ],
   },
   {
@@ -32,6 +33,7 @@ const NAV = [
       { icon: '💬', label: 'Telegram', href: 'https://t.me/+QOsnpSdhDGZkZGQ1', ext: true },
       { icon: '📄', label: 'Whitepaper',       href: 'https://whitepaper.tensoriumlabs.com', ext: true },
       { icon: '⚖', label: 'Risk Disclosure',   href: 'https://github.com/tensorium-labs/tensorium-core/blob/main/RISK_DISCLOSURE.md', ext: true },
+      { icon: '🔒', label: 'Privacy Policy',    href: '/privacy-policy.html' },
       { icon: '🔍', label: 'Explorer',          href: 'https://explorer.tensoriumlabs.com',  ext: true },
       { icon: '🚰', label: 'Faucet',           href: 'https://faucet.tensoriumlabs.com',    ext: true },
       { icon: '💱', label: 'OTC Trading',      href: 'https://otc.tensoriumlabs.com',       ext: true },

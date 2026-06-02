@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Tensorium Docs</title>
+  <meta name="description" content="Privacy policy for Tensorium Wallet and related documentation surfaces.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">wallet policy + support</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Privacy Policy</span></div>
+    <div class="topbar-links">
+      <a href="/chrome-wallet.html">Chrome Wallet</a>
+      <a href="https://github.com/tensorium-labs/tensorium-wallet-extension" target="_blank">GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🔒 Policy</div>
+      <h1 class="page-title">Tensorium Wallet Privacy Policy</h1>
+      <p class="page-desc">How the Tensorium Wallet browser extension handles local wallet data, RPC traffic, and user-controlled secrets.</p>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body"><strong>Short version.</strong> Tensorium Wallet is designed as a self-custody extension. Private keys are generated, stored, and used locally inside the browser extension. The extension does not require account signup or custodial wallet registration.</div>
+    </div>
+
+    <div class="section" id="summary">
+      <h2>What We Collect</h2>
+      <p>Tensorium Wallet does not intentionally collect personal identity information such as full name, phone number, postal address, or government ID.</p>
+      <p>The extension may interact with public Tensorium RPC endpoints to read chain state and broadcast signed transactions. Those RPC interactions may necessarily expose technical request metadata such as:</p>
+      <ul>
+        <li>wallet address queried for balance or UTXOs</li>
+        <li>signed transaction payloads that the user chooses to broadcast</li>
+        <li>standard web request metadata such as IP address, user agent, or timestamps as seen by the RPC host</li>
+      </ul>
+    </div>
+
+    <div class="section" id="storage">
+      <h2>Local Wallet Storage</h2>
+      <p>The extension stores wallet data in <code>chrome.storage.local</code> on the user’s device. This may include:</p>
+      <ul>
+        <li>encrypted wallet JSON</li>
+        <li>selected network (`testnet`, `mainnet-candidate`, or custom RPC)</li>
+        <li>optional custom RPC URL</li>
+      </ul>
+      <p>The private key is encrypted before storage. The extension is intended to avoid sending raw private keys to Tensorium infrastructure.</p>
+    </div>
+
+    <div class="section" id="rpc">
+      <h2>RPC Usage</h2>
+      <p>By default, the extension is configured to access:</p>
+      <ul>
+        <li><code>https://rpc.tensoriumlabs.com</code></li>
+        <li><code>https://mc-rpc.tensoriumlabs.com</code></li>
+      </ul>
+      <p>These endpoints are used to:</p>
+      <ul>
+        <li>check block height</li>
+        <li>retrieve UTXOs for the active address</li>
+        <li>broadcast signed transactions</li>
+      </ul>
+      <p>If the user configures a custom RPC endpoint, then traffic is sent to that user-selected endpoint instead.</p>
+    </div>
+
+    <div class="section" id="no-sale">
+      <h2>No Sale of Personal Data</h2>
+      <p>Tensorium Wallet is not designed to sell user data or monetize private wallet information. The project goal is to provide a self-custody wallet for the Tensorium network, not an advertising or profile-building platform.</p>
+    </div>
+
+    <div class="section" id="security">
+      <h2>User Responsibility and Security</h2>
+      <p>Users remain responsible for:</p>
+      <ul>
+        <li>protecting their password</li>
+        <li>backing up wallet JSON files securely</li>
+        <li>verifying recipient addresses before sending TXM</li>
+        <li>understanding that blockchain transactions are irreversible once confirmed</li>
+      </ul>
+      <p>If a device is compromised, malware or browser compromise may still put local wallet data at risk. No software wallet can remove all endpoint risk.</p>
+    </div>
+
+    <div class="section" id="contact">
+      <h2>Contact</h2>
+      <p>For wallet support or privacy questions:</p>
+      <ul>
+        <li>Email: <a href="mailto:dev@tensoriumlabs.com">dev@tensoriumlabs.com</a></li>
+        <li>Docs: <a href="/wallet-support.html">Wallet Support</a></li>
+        <li>GitHub: <a href="https://github.com/tensorium-labs/tensorium-wallet-extension/issues" target="_blank">tensorium-wallet-extension issues</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('privacy-policy.html');</script>
+</body>
+</html>

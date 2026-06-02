@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet Support — Tensorium Docs</title>
+  <meta name="description" content="Support information for Tensorium Wallet users, including install, backup, recovery, and troubleshooting guidance.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand"><div class="brand-icon">⬡</div><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
+  <nav class="sidebar-nav"></nav>
+  <div class="sidebar-footer">wallet support</div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb"><a href="/">Docs</a><span class="sep">›</span><span class="cur">Wallet Support</span></div>
+    <div class="topbar-links">
+      <a href="/chrome-wallet.html">Chrome Wallet</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-tag">🛟 Support</div>
+      <h1 class="page-title">Tensorium Wallet Support</h1>
+      <p class="page-desc">Practical help for installing, unlocking, backing up, and troubleshooting the Tensorium Wallet browser extension.</p>
+    </div>
+
+    <div class="section" id="contact">
+      <h2>Support Channels</h2>
+      <ul>
+        <li>Email: <a href="mailto:dev@tensoriumlabs.com">dev@tensoriumlabs.com</a></li>
+        <li>Telegram community: <a href="https://t.me/+QOsnpSdhDGZkZGQ1" target="_blank">Tensorium Telegram</a></li>
+        <li>GitHub issues: <a href="https://github.com/tensorium-labs/tensorium-wallet-extension/issues" target="_blank">tensorium-wallet-extension issues</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="common">
+      <h2>Common Problems</h2>
+
+      <h3>I forgot my password</h3>
+      <p>If you still have the wallet JSON backup, you can import it again and set a new password. If you lost both the password and the backup, there is no recovery path.</p>
+
+      <h3>The wallet says the node is unreachable</h3>
+      <p>Check the selected network in Settings. The extension relies on an RPC endpoint to read UTXOs and broadcast transactions. If the default RPC is temporarily unavailable, try again later or switch to a trusted custom RPC.</p>
+
+      <h3>My balance looks wrong</h3>
+      <p>The current extension uses UTXOs reported by the configured RPC and shows mature balance. Recently mined testnet coinbase outputs may need confirmations before becoming spendable.</p>
+
+      <h3>Why is history incomplete?</h3>
+      <p>The current history view focuses on received transfers and does not yet include full outgoing detection. Explorer remains the best source for complete on-chain visibility until a dedicated indexer is added.</p>
+    </div>
+
+    <div class="section" id="backup">
+      <h2>Backup Checklist</h2>
+      <ul>
+        <li>download the wallet JSON immediately after creation</li>
+        <li>keep at least one offline copy</li>
+        <li>do not send the private key over chat or email</li>
+        <li>test that your backup file can be imported before relying on it</li>
+      </ul>
+    </div>
+
+    <div class="section" id="report">
+      <h2>What to Include in a Bug Report</h2>
+      <ul>
+        <li>browser version</li>
+        <li>whether you used testnet, mainnet-candidate, or custom RPC</li>
+        <li>exact action that failed</li>
+        <li>error message shown in the popup</li>
+        <li>steps to reproduce</li>
+      </ul>
+      <p>Do <strong>not</strong> include private keys, raw wallet backups, or passwords in bug reports.</p>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="/js/nav.js"></script>
+<script>buildSidebar('wallet-support.html');</script>
+</body>
+</html>
