@@ -23,13 +23,13 @@
     <div class="page-header">
       <div class="page-tag">🌐 Network</div>
       <h1 class="page-title">Network Parameters</h1>
-      <p class="page-desc">Consensus parameters, genesis block, ports, and chain constants for the Tensorium testnet.</p>
+      <p class="page-desc">Consensus parameters, genesis block, ports, and chain constants for the Tensorium mainnet-candidate.</p>
     </div>
 
     <div class="section" id="chain">
       <h2>Chain Parameters</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-testnet-0</code></span></div>
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
         <div class="param-row"><span class="param-key">Ticker</span><span class="param-val">TXM</span></div>
         <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256, same as Bitcoin)</span></div>
         <div class="param-row"><span class="param-key">Target Block Time</span><span class="param-val">60 seconds</span></div>
@@ -71,8 +71,8 @@
       <div class="table-wrap"><table>
         <thead><tr><th>Port</th><th>Protocol</th><th>Service</th><th>Exposure</th></tr></thead>
         <tbody>
-          <tr><td><strong>23333</strong></td><td>TCP</td><td>P2P networking</td><td>Open in firewall (public)</td></tr>
-          <tr><td><strong>23332</strong></td><td>TCP/HTTP</td><td>RPC API</td><td>Localhost only — never expose</td></tr>
+          <tr><td><strong>33333</strong></td><td>TCP</td><td>P2P networking</td><td>Open in firewall (public)</td></tr>
+          <tr><td><strong>33332</strong></td><td>TCP/HTTP</td><td>RPC API</td><td>Localhost only — never expose</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -80,9 +80,9 @@
     <div class="section" id="seed">
       <h2>Seed Node</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">P2P</span><span class="param-val"><code>157.230.44.162:23333</code></span></div>
+        <div class="param-row"><span class="param-key">P2P</span><span class="param-val"><code>seed.tensoriumlabs.com:33333</code></span></div>
         <div class="param-row"><span class="param-key">Operator</span><span class="param-val">Tensorium Labs</span></div>
-        <div class="param-row"><span class="param-key">Usage</span><span class="param-val">Set <code>TENSORIUM_PEERS=157.230.44.162:23333</code> for block propagation. Use for initial sync.</span></div>
+        <div class="param-row"><span class="param-key">Usage</span><span class="param-val">Set <code>TENSORIUM_PEERS=seed.tensoriumlabs.com:33333</code> for block propagation. Use for initial sync.</span></div>
       </div>
     </div>
 

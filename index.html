@@ -17,7 +17,7 @@
     <div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div>
   </a>
   <nav class="sidebar-nav"></nav>
-  <div class="sidebar-footer">public testnet + mainnet-candidate prep · <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">Changelog</a></div>
+  <div class="sidebar-footer">mainnet-candidate live · <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">Changelog</a></div>
 </aside>
 
 <div class="main">
@@ -40,7 +40,7 @@
 
     <div class="callout callout-warn">
       <span class="callout-icon">⚠</span>
-      <div class="callout-body"><strong>Public Testnet.</strong> Tensorium is in active testnet. Coins have no monetary value. The chain may be reset before mainnet. See the <a href="https://whitepaper.tensoriumlabs.com" target="_blank">Whitepaper</a> for the full roadmap.</div>
+      <div class="callout-body"><strong>Mainnet-Candidate Live.</strong> Tensorium mainnet-candidate is live. Mine TXM on the mainnet-candidate chain. See the <a href="https://whitepaper.tensoriumlabs.com" target="_blank">Whitepaper</a> for the full roadmap.</div>
     </div>
 
     <!-- Quick links -->
@@ -123,14 +123,14 @@
           <div class="step-num">3</div>
           <div class="step-content">
             <div class="step-title">Init + sync the chain</div>
-            <div class="step-desc"><code>tensorium-node init</code> then <code>tensorium-node sync 157.230.44.162:23333</code></div>
+            <div class="step-desc"><code>tensorium-node mainnet-candidate init</code> then <code>tensorium-node mainnet-candidate sync seed.tensoriumlabs.com:33333</code></div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-content">
             <div class="step-title">Start node and miner</div>
-            <div class="step-desc">Run the RPC + P2P services, then <code>txmminer 127.0.0.1:23332 YOUR_ADDRESS</code></div>
+            <div class="step-desc">Run the RPC + P2P services, then <code>txmminer 127.0.0.1:33332 YOUR_ADDRESS</code></div>
           </div>
         </div>
       </div>
@@ -142,17 +142,17 @@
     <div class="section" id="network-quick">
       <h2>Network at a Glance</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-testnet-0</code></span></div>
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
         <div class="param-row"><span class="param-key">Ticker</span><span class="param-val">TXM</span></div>
         <div class="param-row"><span class="param-key">Block Time</span><span class="param-val">60 seconds (target)</span></div>
         <div class="param-row"><span class="param-key">Block Reward (Era 1)</span><span class="param-val">15.23557865 TXM</span></div>
         <div class="param-row"><span class="param-key">Max Supply</span><span class="param-val">33,000,000 TXM (32M mining + 1M founder)</span></div>
         <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256)</span></div>
-        <div class="param-row"><span class="param-key">Testnet Difficulty</span><span class="param-val">20-bit CPU-friendly onboarding testnet (reset 2026-06-01)</span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">36-bit GPU-first mainnet-candidate</span></div>
         <div class="param-row"><span class="param-key">MC Genesis Hash</span><span class="param-val"><code>000000000063ab6f057a16376b1712e709719126ad977a3d4be23f83b89f0392</code></span></div>
-        <div class="param-row"><span class="param-key">P2P Port</span><span class="param-val">23333 (open in firewall)</span></div>
-        <div class="param-row"><span class="param-key">RPC Port</span><span class="param-val">23332 (localhost only)</span></div>
-        <div class="param-row"><span class="param-key">Seed Node</span><span class="param-val"><code>157.230.44.162:23333</code></span></div>
+        <div class="param-row"><span class="param-key">P2P Port</span><span class="param-val">33333 (open in firewall)</span></div>
+        <div class="param-row"><span class="param-key">RPC Port</span><span class="param-val">33332 (localhost only)</span></div>
+        <div class="param-row"><span class="param-key">Seed Node</span><span class="param-val"><code>seed.tensoriumlabs.com:33333</code></span></div>
         <div class="param-row"><span class="param-key">Explorer</span><span class="param-val"><a href="https://explorer.tensoriumlabs.com" target="_blank">explorer.tensoriumlabs.com</a></span></div>
       </div>
     </div>
@@ -160,18 +160,18 @@
     <!-- Binaries -->
     <div class="section" id="binaries">
       <h2>Latest Release</h2>
-      <p>Current public release track: <strong>v0.2.0-testnet</strong> for testnet onboarding, with <strong>v0.3.1-mainnet-candidate</strong> reserved for pre-launch validation. <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">View all releases ↗</a></p>
+      <p>Current public release track: <strong>v0.3.1-mainnet-candidate</strong>. <a href="https://github.com/tensorium-labs/tensorium-core/releases" target="_blank">View all releases ↗</a></p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Binary</th><th>Platform</th><th>Download</th></tr></thead>
           <tbody>
             <tr>
               <td><code>tensorium-node</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/tensorium-node-linux-x86_64" target="_blank">tensorium-node-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.3.1-mainnet-candidate/tensorium-node-linux-x86_64" target="_blank">tensorium-node-linux-x86_64</a></td>
             </tr>
             <tr>
               <td><code>txmminer</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/txmminer-linux-x86_64" target="_blank">txmminer-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.3.1-mainnet-candidate/txmminer-linux-x86_64" target="_blank">txmminer-linux-x86_64</a></td>
             </tr>
             <tr>
               <td><code>txmminer-cuda</code></td><td>Linux x86_64 / NVIDIA CUDA</td>
@@ -179,7 +179,7 @@
             </tr>
             <tr>
               <td><code>txmwallet</code></td><td>Linux x86_64</td>
-              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.2.0-testnet/txmwallet-linux-x86_64" target="_blank">txmwallet-linux-x86_64</a></td>
+              <td><a href="https://github.com/tensorium-labs/tensorium-core/releases/download/v0.3.1-mainnet-candidate/txmwallet-linux-x86_64" target="_blank">txmwallet-linux-x86_64</a></td>
             </tr>
           </tbody>
         </table>

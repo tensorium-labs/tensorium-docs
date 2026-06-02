@@ -49,7 +49,7 @@
           <tr><td>CPU</td><td>2 cores</td><td>4+ cores</td></tr>
           <tr><td>RAM</td><td>512 MB</td><td>2 GB+</td></tr>
           <tr><td>Disk</td><td>1 GB free</td><td>10 GB+</td></tr>
-          <tr><td>Port</td><td>23333 open (P2P)</td><td>—</td></tr>
+          <tr><td>Port</td><td>33333 open (P2P)</td><td>—</td></tr>
         </tbody>
       </table></div>
       <div class="callout callout-info">
@@ -133,27 +133,27 @@ echo "Your address: $ADDR"</pre>
 TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-tensorium-node init
+tensorium-node mainnet-candidate init
 
 # Sync from seed node
 TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-tensorium-node sync 157.230.44.162:23333</pre>
+tensorium-node mainnet-candidate sync seed.tensoriumlabs.com:33333</pre>
 
       <div class="pre-header">bash — start RPC + P2P (two terminals or use nohup)</div>
       <pre># Terminal 1 — RPC (keep on localhost only)
 TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-TENSORIUM_PEERS=157.230.44.162:23333 \
-tensorium-node rpc 127.0.0.1:23332
+TENSORIUM_PEERS=seed.tensoriumlabs.com:33333 \
+tensorium-node mainnet-candidate rpc 127.0.0.1:33332
 
 # Terminal 2 — P2P listener (open to network)
 TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-tensorium-node p2p-listen 0.0.0.0:23333</pre>
+tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
 
       <h3>Auto-start with systemd</h3>
       <div class="pre-header">bash</div>
@@ -167,8 +167,8 @@ User=$(whoami)
 Environment=TENSORIUM_STATE=$HOME/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=$HOME/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=$HOME/tensorium-node/banlist.json
-Environment=TENSORIUM_PEERS=157.230.44.162:23333
-ExecStart=/usr/local/bin/tensorium-node rpc 127.0.0.1:23332
+Environment=TENSORIUM_PEERS=seed.tensoriumlabs.com:33333
+ExecStart=/usr/local/bin/tensorium-node mainnet-candidate rpc 127.0.0.1:33332
 Restart=always
 RestartSec=10
 [Install]
@@ -185,7 +185,7 @@ User=$(whoami)
 Environment=TENSORIUM_STATE=$HOME/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=$HOME/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=$HOME/tensorium-node/banlist.json
-ExecStart=/usr/local/bin/tensorium-node p2p-listen 0.0.0.0:23333
+ExecStart=/usr/local/bin/tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333
 Restart=always
 RestartSec=10
 [Install]
@@ -202,18 +202,18 @@ sudo systemctl enable --now tensorium-rpc tensorium-p2p</pre>
       <pre>YOUR_ADDRESS="txm1your_address_here"
 
 # Mine continuously — auto-detects core count
-txmminer 127.0.0.1:23332 "$YOUR_ADDRESS"
+txmminer 127.0.0.1:33332 "$YOUR_ADDRESS"
 
 # Specify thread count
-txmminer 127.0.0.1:23332 "$YOUR_ADDRESS" 8</pre>
+txmminer 127.0.0.1:33332 "$YOUR_ADDRESS" 8</pre>
 
       <h3>CUDA solo mining</h3>
       <div class="pre-header">bash</div>
       <pre>YOUR_ADDRESS="txm1your_address_here"
-txmminer-cuda 127.0.0.1:23332 "$YOUR_ADDRESS"</pre>
+txmminer-cuda 127.0.0.1:33332 "$YOUR_ADDRESS"</pre>
 
       <p>Sample output:</p>
-      <pre>txmminer  rpc=127.0.0.1:23332  miner=txm1abc...  threads=8
+      <pre>txmminer  rpc=127.0.0.1:33332  miner=txm1abc...  threads=8
 Press Ctrl+C to stop.
 
 mining  height=151  bits=26  threads=8  … ✓  height=151  nonce=8432156   7.2s  9.31 MH/s
@@ -240,7 +240,7 @@ After=tensorium-rpc.service
 [Service]
 Type=simple
 User=$(whoami)
-ExecStart=/usr/local/bin/txmminer 127.0.0.1:23332 YOUR_TXM_ADDRESS
+ExecStart=/usr/local/bin/txmminer 127.0.0.1:33332 YOUR_TXM_ADDRESS
 Restart=always
 RestartSec=5
 [Install]
