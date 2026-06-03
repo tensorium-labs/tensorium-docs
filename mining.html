@@ -24,7 +24,7 @@
     </div>
     <div class="topbar-links">
       <a href="https://explorer.tensoriumlabs.com" target="_blank">Explorer</a>
-      <a href="https://github.com/rygroup-dev/tensorium-core" target="_blank">GitHub</a>
+      <a href="https://github.com/tensorium-labs/tensorium-core" target="_blank">GitHub</a>
     </div>
   </div>
   <div class="content">
@@ -32,12 +32,12 @@
     <div class="page-header">
       <div class="page-tag">⛏ Mining</div>
       <h1 class="page-title">Mining Guide</h1>
-      <p class="page-desc">Mine TXM on the GPU-first public testnet with the CUDA miner, or use the official pool for simpler payout tracking.</p>
+      <p class="page-desc">Mine TXM on the GPU-first mainnet with the CUDA miner, or use the official pool for simpler payout tracking.</p>
     </div>
 
-    <div class="callout callout-warn">
-      <span class="callout-icon">⚠</span>
-      <div class="callout-body"><strong>Testnet only.</strong> TXM has no monetary value. The chain may be reset before mainnet. Mine to test the software and help find bugs.</div>
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body"><strong>Mainnet is LIVE</strong> as of 2026-06-02. Chain ID: <code>tensorium-mainnet-candidate-0</code>. Mining rewards are real TXM. GPU required — mainnet initial difficulty is 40 bits.</div>
     </div>
 
     <div class="section" id="requirements">
@@ -54,7 +54,7 @@
       </table></div>
       <div class="callout callout-info">
         <span class="callout-icon">ℹ</span>
-        <div class="callout-body"><strong>GPU-first testnet is active.</strong> Current public testnet difficulty is 36 bits. CPU mining still works for protocol testing, but practical mining should use <code>txmminer-cuda</code> or the official pool.</div>
+        <div class="callout-body"><strong>GPU required for mainnet.</strong> Mainnet difficulty starts at 40 bits — a GPU (RTX 3000+) is required. CPU mining is diagnostic only and cannot mine at mainnet difficulty. Use <code>txmminer-cuda</code> or the official pool.</div>
       </div>
     </div>
 
@@ -64,11 +64,10 @@
       <div class="pre-header">bash — pool mining</div>
       <pre>YOUR_ADDRESS="txm1your_address_here"
 
-# CPU miner through pool
-txmminer pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"
+# CUDA GPU miner through pool (recommended for mainnet)
+txmminer-cuda pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"
 
-# CUDA GPU miner through pool
-txmminer-cuda pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"</pre>
+# Note: txmminer (CPU) cannot mine at mainnet difficulty (40 bits). GPU required.</pre>
 
       <div class="callout callout-info">
         <span class="callout-icon">ℹ</span>
@@ -90,20 +89,22 @@ txmminer-cuda pooltxm.tensoriumlabs.com:23336 "$YOUR_ADDRESS"</pre>
       <h2>Installation</h2>
       <h3>One-line installer</h3>
       <div class="pre-header">bash</div>
-      <pre>curl -fsSL https://raw.githubusercontent.com/rygroup-dev/tensorium-core/main/install.sh | bash</pre>
-      <p>Handles binaries, wallet creation, chain init, seed node sync, and optional systemd setup automatically.</p>
+      <pre>curl -fsSL https://raw.githubusercontent.com/tensorium-labs/tensorium-core/main/install.sh | bash</pre>
+      <p>Handles binaries, wallet creation, mainnet-candidate chain init, seed node sync, and optional systemd setup automatically.</p>
 
       <h3>Manual download</h3>
       <div class="pre-header">bash</div>
       <pre>RELEASE="v0.3.1-mainnet-candidate"
-BASE="https://github.com/rygroup-dev/tensorium-core/releases/download/${RELEASE}"
+BASE="https://github.com/tensorium-labs/tensorium-core/releases/download/${RELEASE}"
 
 curl -fsSL -o tensorium-node "${BASE}/tensorium-node-linux-x86_64"
-curl -fsSL -o txmminer        "${BASE}/txmminer-linux-x86_64"
 curl -fsSL -o txmwallet       "${BASE}/txmwallet-linux-x86_64"
 
-chmod +x tensorium-node txmminer txmwallet
-sudo mv tensorium-node txmminer txmwallet /usr/local/bin/</pre>
+# Download txmminer-cuda for your GPU (sm_86 = RTX 3000/4000 series)
+curl -fsSL -o txmminer-cuda "${BASE}/txmminer-cuda-linux-x86_64-sm86"
+
+chmod +x tensorium-node txmwallet txmminer-cuda
+sudo mv tensorium-node txmwallet txmminer-cuda /usr/local/bin/</pre>
     </div>
 
     <div class="section" id="wallet">
@@ -232,15 +233,15 @@ mining  height=153  bits=26  threads=8  … ✓  height=153  nonce=71234812 61.3
       </table></div>
 
       <h3>Keep miner running persistently</h3>
-      <div class="pre-header">bash — systemd</div>
+      <div class="pre-header">bash — systemd (GPU solo miner)</div>
       <pre>sudo tee /etc/systemd/system/tensorium-miner.service &lt;&lt;EOF
 [Unit]
-Description=Tensorium CPU Miner
+Description=Tensorium CUDA GPU Miner
 After=tensorium-rpc.service
 [Service]
 Type=simple
 User=$(whoami)
-ExecStart=/usr/local/bin/txmminer 127.0.0.1:33332 YOUR_TXM_ADDRESS
+ExecStart=/usr/local/bin/txmminer-cuda 127.0.0.1:33332 YOUR_TXM_ADDRESS
 Restart=always
 RestartSec=5
 [Install]
@@ -252,7 +253,7 @@ sudo systemctl enable --now tensorium-miner</pre>
 
     <div class="section" id="rewards">
       <h2>Rewards</h2>
-      <p>Every block you mine earns <strong>15.23557865 TXM</strong> (Era 1). Rewards require <strong>100 confirmations</strong> (~100 minutes) before they are spendable.</p>
+      <p>Every block you mine earns <strong>11.9027 TXM</strong> (Era 1, mainnet). Rewards require <strong>100 confirmations</strong> (~100 minutes) before they are spendable.</p>
       <div class="pre-header">bash — check balance</div>
       <pre>export TENSORIUM_WALLET=~/tensorium-node/wallet.json
 export TENSORIUM_WALLET_PASSPHRASE="your-passphrase"
@@ -266,28 +267,28 @@ txmwallet balance</pre>
       <h2>FAQ</h2>
       <div class="faq">
         <div class="faq-item">
-          <div class="faq-q">Is testnet TXM worth anything?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">No. Zero monetary value. Testnet exists to test the protocol and find bugs. Do not buy, sell, or trade testnet coins.</div>
+          <div class="faq-q">Is TXM worth anything?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">Mainnet is live since 2026-06-02. Mainnet TXM has real value — it can be bridged to Optimism as wTXM and traded. Always conduct your own research. The whitepaper and risk disclosure are at <a href="https://whitepaper.tensoriumlabs.com" target="_blank">whitepaper.tensoriumlabs.com</a>.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Do I need a GPU?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">For practical mining on the current GPU-first testnet, yes. CPU mining remains useful for protocol testing, but difficulty 36 is intended for CUDA/GPU miners.</div>
+          <div class="faq-a">Yes. Mainnet difficulty starts at 40 bits, which requires a GPU (RTX 3000+ recommended). <code>txmminer</code> (CPU) is for development and diagnostic use only — it cannot mine at mainnet difficulty. Use <code>txmminer-cuda</code> for mainnet.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Genesis init is taking too long — is it stuck?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">Not stuck. At difficulty 26, genesis requires ~67M hash attempts on average. On a basic VPS (1–2 MH/s), this takes 1–3 minutes. On faster hardware it's faster. It will complete.</div>
+          <div class="faq-a">The mainnet genesis is hardcoded in the binary. Running <code>tensorium-node mainnet-candidate init</code> should be near-instant — it loads the pre-mined genesis block from binary constants. If it hangs, check you have the correct binary version (v0.3.1-mainnet-candidate or later).</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Balance shows 0 after mining a block?<span class="faq-icon" style="margin-left:auto">+</span></div>
           <div class="faq-a">Coinbase rewards require 100 block confirmations before they are spendable. Wait for ~100 more blocks, then check again.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">When is GPU mining available?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">GPU mining is available now on the public testnet through <code>txmminer-cuda</code>. The official pool is also live at <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>.</div>
+          <div class="faq-q">What is pool mining?<span class="faq-icon" style="margin-left:auto">+</span></div>
+          <div class="faq-a">Pool mining connects <code>txmminer-cuda</code> to <code>pooltxm.tensoriumlabs.com:23336</code> instead of your own node. The pool charges 5% fee on block rewards and handles payout accounting. Solo mining (connect directly to your own node RPC:33332) is fee-free. See <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Found a bug. Where to report?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">Open an issue on <a href="https://github.com/rygroup-dev/tensorium-core/issues" target="_blank">GitHub</a>. Include OS, binary version, and steps to reproduce.</div>
+          <div class="faq-a">Open an issue on <a href="https://github.com/tensorium-labs/tensorium-core/issues" target="_blank">GitHub</a>. Include OS, binary version, and steps to reproduce.</div>
         </div>
       </div>
     </div>

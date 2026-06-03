@@ -27,39 +27,40 @@
     </div>
 
     <div class="section" id="chain">
-      <h2>Chain Parameters</h2>
+      <h2>Chain Parameters (Mainnet — LIVE)</h2>
       <div class="param-table">
         <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
         <div class="param-row"><span class="param-key">Ticker</span><span class="param-val">TXM</span></div>
         <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256, same as Bitcoin)</span></div>
         <div class="param-row"><span class="param-key">Target Block Time</span><span class="param-val">60 seconds</span></div>
-        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">26 leading zero bits (~67M hashes/block)</span></div>
-        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">20 bits</span></div>
-        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">40 bits</span></div>
-        <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">60 blocks, ±1 bit max per window</span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">40 leading zero bits (GPU required)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">32 bits</span></div>
+        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">56 bits</span></div>
+        <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">120 blocks, ±1 bit max per window</span></div>
         <div class="param-row"><span class="param-key">Coinbase Maturity</span><span class="param-val">100 blocks before reward is spendable</span></div>
         <div class="param-row"><span class="param-key">Max Future Timestamp</span><span class="param-val">+2 hours from local time</span></div>
       </div>
     </div>
 
     <div class="section" id="genesis">
-      <h2>Genesis Block</h2>
+      <h2>Genesis Block (Mainnet)</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Hash</span><span class="param-val"><code style="font-size:11px;word-break:break-all">00000035d8a99c0900fec5daa3ef5a7c2d71c7140e473d239a24b0dd4cd7f6c3</code></span></div>
+        <div class="param-row"><span class="param-key">Hash</span><span class="param-val"><code style="font-size:11px;word-break:break-all">0000000000269b71601aded6dda2991df6f88b67ac2bef13dff56f4f8a94dfae</code></span></div>
         <div class="param-row"><span class="param-key">Height</span><span class="param-val">0</span></div>
-        <div class="param-row"><span class="param-key">Timestamp</span><span class="param-val"><code>1748649600</code> — 2025-05-30 16:00:00 UTC</span></div>
-        <div class="param-row"><span class="param-key">Nonce</span><span class="param-val">95,202,247</span></div>
-        <div class="param-row"><span class="param-key">Difficulty</span><span class="param-val">26 bits</span></div>
+        <div class="param-row"><span class="param-key">Timestamp</span><span class="param-val"><code>1780272000</code> — 2026-06-01 00:00:00 UTC</span></div>
+        <div class="param-row"><span class="param-key">Nonce</span><span class="param-val">1,936,263,118,035</span></div>
+        <div class="param-row"><span class="param-key">Difficulty</span><span class="param-val">40 bits</span></div>
+        <div class="param-row"><span class="param-key">Mined</span><span class="param-val">RTX 5090, 4.64 GH/s, 474 seconds (2026-06-02)</span></div>
       </div>
     </div>
 
     <div class="section" id="tokenomics">
-      <h2>Tokenomics</h2>
+      <h2>Tokenomics (v2)</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Max Supply</span><span class="param-val">33,000,000 TXM</span></div>
-        <div class="param-row"><span class="param-key">Mining Allocation</span><span class="param-val">32,000,000 TXM (96.97%)</span></div>
-        <div class="param-row"><span class="param-key">Founder Allocation</span><span class="param-val">1,000,000 TXM (3.03%)</span></div>
-        <div class="param-row"><span class="param-key">Era 1 Block Reward</span><span class="param-val">15.23557865 TXM (1,523,557,865 atoms)</span></div>
+        <div class="param-row"><span class="param-key">Max Supply</span><span class="param-val">33,000,000 TXM total</span></div>
+        <div class="param-row"><span class="param-key">Pre-mint Allocation</span><span class="param-val">8,000,000 TXM (founder + liquidity + ecosystem reserves)</span></div>
+        <div class="param-row"><span class="param-key">Mining Allocation</span><span class="param-val">25,000,000 TXM via block rewards</span></div>
+        <div class="param-row"><span class="param-key">Era 1 Block Reward</span><span class="param-val">11.9027 TXM (1,190,279,581 atoms)</span></div>
         <div class="param-row"><span class="param-key">1 TXM</span><span class="param-val">100,000,000 atoms</span></div>
         <div class="param-row"><span class="param-key">Halving Interval</span><span class="param-val">1,051,200 blocks (~2 years at 60s/block)</span></div>
         <div class="param-row"><span class="param-key">Total Eras</span><span class="param-val">10 (~20 years, then fee-only)</span></div>
@@ -87,18 +88,20 @@
     </div>
 
     <div class="section" id="mainnet">
-      <h2>Mainnet Candidate Parameters (Planned)</h2>
-      <p>Not final — will be locked before mainnet launch.</p>
+      <h2>Mainnet Parameters (LIVE — 2026-06-02)</h2>
+      <p>These are the finalized mainnet parameters. The chain <code>tensorium-mainnet-candidate-0</code> is live.</p>
       <div class="param-table">
         <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
-        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">36 bits (~68B hashes/block, GPU required)</span></div>
-        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">28 bits</span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">40 bits (GPU required — RTX 3000+ recommended)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">32 bits</span></div>
         <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">56 bits</span></div>
         <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">120 blocks</span></div>
+        <div class="param-row"><span class="param-key">RPC Port</span><span class="param-val">33332 (localhost only)</span></div>
+        <div class="param-row"><span class="param-key">P2P Port</span><span class="param-val">33333 (public)</span></div>
       </div>
       <div class="callout callout-info">
         <span class="callout-icon">ℹ</span>
-        <div class="callout-body">Mainnet will not launch until Phase 6 (GPU testnet) is stable, a security audit is complete, and all parameters are publicly reviewed. See the <a href="https://whitepaper.tensoriumlabs.com/#roadmap" target="_blank">Roadmap</a>.</div>
+        <div class="callout-body">Mainnet is live. Connect with <code>tensorium-node mainnet-candidate init</code> then <code>mainnet-candidate rpc</code>. Mine with <code>txmminer-cuda &lt;node_rpc:33332&gt; &lt;address&gt;</code> (solo) or connect to <code>pooltxm.tensoriumlabs.com:23336</code> (pool, 5% fee). See the <a href="https://whitepaper.tensoriumlabs.com/#roadmap" target="_blank">Roadmap</a>.</div>
       </div>
     </div>
 
