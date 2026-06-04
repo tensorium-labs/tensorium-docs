@@ -38,7 +38,7 @@
             <li>View address &amp; balance</li>
             <li>Send TXM</li>
             <li>Transaction history</li>
-            <li>Testnet + Mainnet Candidate</li>
+            <li>Mainnet Candidate</li>
             <li>Export / backup wallet file</li>
           </ul>
         </div>
@@ -145,7 +145,7 @@ npm run build</pre>
       <table>
         <thead><tr><th>Network</th><th>RPC Endpoint</th><th>Use for</th></tr></thead>
         <tbody>
-          <tr><td><span class="badge badge-yellow">Mainnet</span></td><td><code>https://mc-rpc.tensoriumlabs.com</code></td><td>Live mainnet chain</td></tr>
+          <tr><td><span class="badge badge-yellow">Mainnet</span></td><td><code>https://rpc.tensoriumlabs.com</code></td><td>Live mainnet chain</td></tr>
           <tr><td></tr>
           <tr><td><span class="badge badge-purple">Custom</span></td><td>User-defined URL</td><td>Local node or custom RPC</td></tr>
         </tbody>
@@ -153,7 +153,7 @@ npm run build</pre>
 
       <p>To run a local node and use it with the extension:</p>
       <div class="pre-header">bash</div>
-      <pre># Start testnet node with public RPC allowed
+      <pre># Start local mainnet node with public RPC allowed
 TENSORIUM_RPC_ALLOW_PUBLIC=1 tensorium-node mainnet-candidate rpc 0.0.0.0:33332
 
 # In extension Settings → Custom RPC → http://localhost:33332</pre>
