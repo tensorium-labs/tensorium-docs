@@ -19,7 +19,7 @@ This repository contains the public operator and developer guides for running a 
 - RPC port: `33332/tcp` on localhost only
 - Primary seed: `seed.tensoriumlabs.com:33333`
 - Secondary seed: `seed2.tensoriumlabs.com:33333`
-- Backup seed host: `139.180.137.144:33333`
+- Backup seed naming: expose the hostname, not the raw VPS IP
 - Coinbase maturity: `100` blocks
 - Transaction fees: currently no protocol-enforced minimum fee
 - Official pool fee: `5%` / `500` bps
