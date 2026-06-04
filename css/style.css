@@ -60,10 +60,10 @@ a:hover { text-decoration: underline; }
 
 .brand-icon {
   width: 30px; height: 30px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-l));
-  border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(88, 166, 255, 0.2));
 }
 
 .brand-name { font-weight: 700; font-size: 14px; color: var(--text); }
