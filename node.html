@@ -75,7 +75,7 @@ MEMPOOL=~/tensorium-node/mempool.json
 BANS=~/tensorium-node/banlist.json
 
 nohup bash -c "TENSORIUM_MC_STATE=$STATE TENSORIUM_MC_MEMPOOL=$MEMPOOL \
-  TENSORIUM_MC_BANS=$BANS TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333 \
+  TENSORIUM_MC_BANS=$BANS TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333 \
   tensorium-node mainnet-candidate rpc 127.0.0.1:33332" > ~/tensorium-node/rpc.log 2>&1 &
 
 nohup bash -c "TENSORIUM_MC_STATE=$STATE TENSORIUM_MC_MEMPOOL=$MEMPOOL \
@@ -108,7 +108,7 @@ User=${USER}
 Environment=TENSORIUM_STATE=${HOME_DIR}/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=${HOME_DIR}/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=${HOME_DIR}/tensorium-node/banlist.json
-Environment=TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333
+Environment=TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333
 ExecStart=/usr/local/bin/tensorium-node mainnet-candidate rpc 127.0.0.1:33332
 Restart=always
 RestartSec=10
@@ -197,7 +197,7 @@ tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
         <div class="param-row"><span class="param-key">TENSORIUM_MC_STATE</span><span class="param-val">Chain state file path. Default: <code>tensorium-mainnet-state.json</code></span></div>
         <div class="param-row"><span class="param-key">TENSORIUM_MC_MEMPOOL</span><span class="param-val">Mempool file path. Default: <code>tensorium-mainnet-mempool.json</code></span></div>
         <div class="param-row"><span class="param-key">TENSORIUM_MC_BANS</span><span class="param-val">Peer ban list file. Default: <code>tensorium-mainnet-banlist.json</code></span></div>
-        <div class="param-row"><span class="param-key">TENSORIUM_MC_PEERS</span><span class="param-val">Comma-separated peers for block/tx broadcast. Example: <code>seed.tensoriumlabs.com:33333</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_MC_PEERS</span><span class="param-val">Comma-separated peers for block/tx broadcast. Example: <code>seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333</code></span></div>
         <div class="param-row"><span class="param-key">TENSORIUM_NODE_ID</span><span class="param-val">Node identity shown in P2P handshake. Default: <code>node-&lt;timestamp&gt;</code></span></div>
       </div>
     </div>
