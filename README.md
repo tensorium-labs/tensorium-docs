@@ -24,6 +24,8 @@ This repository contains the public operator and developer guides for running a 
 - Transaction fees: currently no protocol-enforced minimum fee
 - Official pool fee: `5%` / `500` bps
 - Pool payout model: `gross reward - pool fee = net miner payout`
+- Pool miner endpoint: `pooltxm.tensoriumlabs.com:3333`
+- Pool website data scope: `pool ledger only` — direct/solo-mined blocks remain visible on-chain in the explorer, not in pool accounting
 
 ## Main Pages
 

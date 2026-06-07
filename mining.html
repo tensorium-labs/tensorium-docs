@@ -60,7 +60,7 @@
 
     <div class="section" id="pool-mining">
       <h2>Official Pool Mining</h2>
-      <p>The official/reference pool is live at <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>. Miners connect to the pool RPC endpoint instead of a local node RPC.</p>
+      <p>The official/reference pool is live at <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>. Miners connect to the pool Stratum endpoint instead of their own node RPC.</p>
       <div class="pre-header">bash — pool mining</div>
       <pre>YOUR_ADDRESS="txm1your_address_here"
 
@@ -72,6 +72,11 @@ tensorium-miner --mode pool --pool stratum+tcp://pooltxm.tensoriumlabs.com:3333 
         <div class="callout-body"><strong>Pool fee disclosure.</strong> The official pool charges a transparent 5% fee at payout accounting level. Gross reward, pool fee, and net miner payout are shown on the pool website. Solo miners can avoid the pool fee by mining directly against their own node.</div>
       </div>
 
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body"><strong>Pool website data scope.</strong> The pool website shows <strong>pool ledger</strong> entries only. Direct or solo-mined blocks settle on-chain to the miner wallet and stay visible in the explorer, but they do not appear in pool payout accounting.</div>
+      </div>
+
       <div class="param-table">
         <div class="param-row"><span class="param-key">Pool website</span><span class="param-val"><a href="https://pooltxm.tensoriumlabs.com" target="_blank">https://pooltxm.tensoriumlabs.com</a></span></div>
         <div class="param-row"><span class="param-key">Miner endpoint</span><span class="param-val"><code>pooltxm.tensoriumlabs.com:3333</code></span></div>
@@ -80,7 +85,7 @@ tensorium-miner --mode pool --pool stratum+tcp://pooltxm.tensoriumlabs.com:3333 
       </div>
 
       <h3>Check payout</h3>
-      <p>Open the pool website and paste your miner wallet address in the miner lookup field. The website shows pending net payout and recent accounting entries.</p>
+      <p>Open the pool website and paste your miner wallet address in the miner lookup field. The website shows pending net payout and recent <strong>pool accounting</strong> entries, not every block mined on-chain.</p>
     </div>
 
     <div class="section" id="install">
@@ -273,7 +278,7 @@ txmwallet balance</pre>
         </div>
         <div class="faq-item">
           <div class="faq-q">What is pool mining?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">Pool mining connects <code>tensorium-miner</code> to <code>pooltxm.tensoriumlabs.com:3333</code> instead of your own node. The pool charges 5% fee on block rewards and handles payout accounting. Solo mining (connect directly to your own node RPC:33332) is fee-free. See <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>.</div>
+          <div class="faq-a">Pool mining connects <code>tensorium-miner</code> to <code>pooltxm.tensoriumlabs.com:3333</code> instead of your own node. The pool charges 5% fee on block rewards and handles payout accounting. The pool website shows pool ledger entries only. Solo mining (connect directly to your own node RPC:33332) is fee-free and settles directly on-chain to your wallet. See <a href="https://pooltxm.tensoriumlabs.com" target="_blank">pooltxm.tensoriumlabs.com</a>.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Found a bug. Where to report?<span class="faq-icon" style="margin-left:auto">+</span></div>
