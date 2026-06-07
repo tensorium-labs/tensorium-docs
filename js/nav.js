@@ -30,14 +30,14 @@ const NAV = [
   {
     group: 'Resources',
     items: [
-      { icon: '💬', label: 'Telegram', href: 'https://t.me/+QOsnpSdhDGZkZGQ1', ext: true },
+      { icon: '💬', label: 'Discord', href: 'https://discord.gg/KkgGSZKVZw', ext: true },
       { icon: '📄', label: 'Whitepaper',       href: 'https://whitepaper.tensoriumlabs.com', ext: true },
       { icon: '⚖', label: 'Risk Disclosure',   href: 'https://github.com/tensorium-labs/tensorium-core/blob/main/RISK_DISCLOSURE.md', ext: true },
       { icon: '🔒', label: 'Privacy Policy',    href: '/privacy-policy.html' },
       { icon: '🔍', label: 'Explorer',          href: 'https://explorer.tensoriumlabs.com',  ext: true },
-      { icon: '🚰', label: 'Faucet',           href: 'https://faucet.tensoriumlabs.com',    ext: true },
+      { icon: '⛏', label: 'Mining Pool',       href: 'https://pooltxm.tensoriumlabs.com',   ext: true },
       { icon: '💱', label: 'OTC Trading',      href: 'https://otc.tensoriumlabs.com',       ext: true },
-      { icon: '🔗', label: 'Bridge (Soon)',    href: 'https://bridge.tensoriumlabs.com',    ext: true },
+      { icon: '🔗', label: 'Bridge',           href: 'https://bridge.tensoriumlabs.com',    ext: true },
       { icon: '📊', label: 'Status',           href: 'https://status.tensoriumlabs.com',    ext: true },
       { icon: '⌨', label: 'GitHub',            href: 'https://github.com/tensorium-labs/tensorium-core', ext: true },
     ],
