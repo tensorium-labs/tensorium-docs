@@ -15,7 +15,7 @@
     <div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div>
   </a>
   <nav class="sidebar-nav"></nav>
-  <div class="sidebar-footer">v0.3.3-mainnet</div>
+  <div class="sidebar-footer">v0.3.5-mainnet</div>
 </aside>
 <div class="main">
   <div class="topbar">
@@ -97,14 +97,16 @@ tensorium-miner --mode pool --pool stratum+tcp://pooltxm.tensoriumlabs.com:3333 
 
       <h3>Manual download</h3>
       <div class="pre-header">bash</div>
-      <pre>RELEASE="v0.3.3-mainnet"
+      <pre>RELEASE="v0.3.5-mainnet"
 BASE="https://github.com/tensorium-labs/tensorium-core/releases/download/${RELEASE}"
 
-curl -fsSL -o tensorium-node "${BASE}/tensorium-node-linux-x86_64"
-curl -fsSL -o txmwallet       "${BASE}/txmwallet-linux-x86_64"
+curl -fsSL -o tensorium-node "${BASE}/tensorium-node-linux-x86_64-v0.3.5"
+curl -fsSL -o txmwallet       "${BASE}/txmwallet-linux-x86_64-v0.3.5"
+curl -fsSL -o tensorium-miner "${BASE}/txmminer-linux-x86_64-v0.3.5"   # CPU solo miner
 
-# Download tensorium-miner for your GPU (sm_86 = RTX 3000/4000 series)
-curl -fsSL -o tensorium-miner "${BASE}/tensorium-miner-linux-x86_64-sm86"
+# For NVIDIA GPU mining (CUDA build, sm_86 = RTX 3000/4000 series),
+# grab the CUDA miner from the v0.3.4 release assets instead:
+# curl -fsSL -o tensorium-miner-cuda "https://github.com/tensorium-labs/tensorium-core/releases/download/v0.3.4-mainnet/txmminer-cuda-linux-x86_64-sm86"
 
 chmod +x tensorium-node txmwallet tensorium-miner
 sudo mv tensorium-node txmwallet tensorium-miner /usr/local/bin/</pre>
@@ -270,7 +272,7 @@ txmwallet balance</pre>
         </div>
         <div class="faq-item">
           <div class="faq-q">Genesis init is taking too long — is it stuck?<span class="faq-icon" style="margin-left:auto">+</span></div>
-          <div class="faq-a">The mainnet genesis is hardcoded in the binary. Running <code>tensorium-node mainnet-candidate init</code> should be near-instant — it loads the pre-mined genesis block from binary constants. If it hangs, check you have the correct binary version (<code>v0.3.3-mainnet</code> or later).</div>
+          <div class="faq-a">The mainnet genesis is hardcoded in the binary. Running <code>tensorium-node mainnet-candidate init</code> should be near-instant — it loads the pre-mined genesis block from binary constants. If it hangs, check you have the correct binary version (<code>v0.3.5-mainnet</code> or later).</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Balance shows 0 after mining a block?<span class="faq-icon" style="margin-left:auto">+</span></div>
