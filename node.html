@@ -11,7 +11,7 @@
 <aside class="sidebar">
   <a href="/" class="sidebar-brand"><img class="brand-icon" src="/assets/tensorium-mark.svg" alt="Tensorium"><div><div class="brand-name">Tensorium</div><div class="brand-sub">Documentation</div></div></a>
   <nav class="sidebar-nav"></nav>
-  <div class="sidebar-footer">v0.3.5-mainnet</div>
+  <div class="sidebar-footer">Mainnet v1 · TensorHash v1</div>
 </aside>
 <div class="main">
   <div class="topbar">
@@ -32,13 +32,13 @@
       <div class="table-wrap"><table>
         <thead><tr><th>Service</th><th>Default Bind</th><th>Purpose</th></tr></thead>
         <tbody>
-          <tr><td><code>tensorium-node mainnet-candidate rpc</code></td><td><code>127.0.0.1:33332</code></td><td>HTTP RPC — miner, wallet, and app integration</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate p2p-listen</code></td><td><code>0.0.0.0:33333</code></td><td>P2P — receive blocks and transactions from peers</td></tr>
+          <tr><td><code>tensorium-node rpc</code></td><td><code>127.0.0.1:33332</code></td><td>HTTP RPC — miner, wallet, and app integration</td></tr>
+          <tr><td><code>tensorium-node p2p-listen</code></td><td><code>0.0.0.0:33333</code></td><td>P2P — receive blocks and transactions from peers</td></tr>
         </tbody>
       </table></div>
       <div class="callout callout-danger">
         <span class="callout-icon">⚠</span>
-        <div class="callout-body"><strong>Never expose RPC publicly.</strong> Bind <code>tensorium-node mainnet-candidate rpc</code> to <code>127.0.0.1</code> only. The RPC has no authentication — anyone with access can submit arbitrary blocks. Open port <strong>33333</strong> (P2P) in your firewall, but keep 33332 (RPC) closed.</div>
+        <div class="callout-body"><strong>Never expose RPC publicly.</strong> Bind <code>tensorium-node rpc</code> to <code>127.0.0.1</code> only. The RPC has no authentication — anyone with access can submit arbitrary blocks. Open port <strong>33333</strong> (P2P) in your firewall, but keep 33332 (RPC) closed.</div>
       </div>
     </div>
 
@@ -126,7 +126,7 @@ User=${USER}
 Environment=TENSORIUM_STATE=${HOME_DIR}/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=${HOME_DIR}/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=${HOME_DIR}/tensorium-node/banlist.json
-ExecStart=/usr/local/bin/tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333
+ExecStart=/usr/local/bin/tensorium-node p2p-listen 0.0.0.0:33333
 Restart=always
 RestartSec=10
 [Install]
@@ -145,49 +145,49 @@ sudo systemctl status tensorium-rpc tensorium-p2p</pre>
       <div class="table-wrap"><table>
         <thead><tr><th>Command</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td><code>tensorium-node mainnet-candidate init</code></td><td>Mine and save the genesis block</td></tr>
+          <tr><td><code>tensorium-node init</code></td><td>Mine and save the genesis block</td></tr>
           <tr><td><code>tensorium-node status</code></td><td>Print current chain tip and height</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate rpc [bind]</code></td><td>Start HTTP RPC server (default 127.0.0.1:33332)</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate p2p-listen [bind]</code></td><td>Start P2P server (default 0.0.0.0:33333)</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate sync [peer]</code></td><td>Pull missing blocks from a peer</td></tr>
+          <tr><td><code>tensorium-node rpc [bind]</code></td><td>Start HTTP RPC server (default 127.0.0.1:33332)</td></tr>
+          <tr><td><code>tensorium-node p2p-listen [bind]</code></td><td>Start P2P server (default 0.0.0.0:33333)</td></tr>
+          <tr><td><code>tensorium-node sync [peer]</code></td><td>Pull missing blocks from a peer</td></tr>
           <tr><td><code>tensorium-node p2p-connect &lt;peer&gt;</code></td><td>Diagnostic handshake (check connectivity)</td></tr>
           <tr><td><code>tensorium-node peers</code></td><td>Print configured TENSORIUM_PEERS</td></tr>
           <tr><td><code>tensorium-node banlist</code></td><td>Show peer ban list</td></tr>
           <tr><td><code>tensorium-node unban &lt;ip&gt;</code></td><td>Remove an IP from ban list</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate init</code></td><td>Initialize the mainnet-candidate chain with the hardcoded genesis nonce</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate rpc 127.0.0.1:33332</code></td><td>Start mainnet-candidate RPC on localhost</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</code></td><td>Start mainnet-candidate P2P listener</td></tr>
-          <tr><td><code>tensorium-node mainnet-candidate sync &lt;peer&gt;</code></td><td>Sync mainnet-candidate blocks from a peer</td></tr>
+          <tr><td><code>tensorium-node init</code></td><td>Initialize the mainnet chain with the hardcoded genesis block</td></tr>
+          <tr><td><code>tensorium-node rpc 127.0.0.1:33332</code></td><td>Start mainnet RPC on localhost</td></tr>
+          <tr><td><code>tensorium-node p2p-listen 0.0.0.0:33333</code></td><td>Start mainnet P2P listener</td></tr>
+          <tr><td><code>tensorium-node sync &lt;peer&gt;</code></td><td>Sync mainnet blocks from a peer</td></tr>
         </tbody>
       </table></div>
     </div>
 
-    <div class="section" id="mainnet-candidate">
-      <h2>Mainnet-Candidate Node</h2>
-      <p>Mainnet-candidate is live. Use this section when you want the raw local run sequence without the installer wrapper.</p>
-      <div class="pre-header">bash — mainnet-candidate local run</div>
+    <div class="section" id="mainnet-node">
+      <h2>Mainnet Node</h2>
+      <p>Use this section when you want the raw local run sequence without the installer wrapper.</p>
+      <div class="pre-header">bash — mainnet local run</div>
       <pre>mkdir -p ~/tensorium-mc
 
 TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
 TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
 TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
-tensorium-node mainnet-candidate init
+tensorium-node init
 
 TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
 TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
 TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
-tensorium-node mainnet-candidate rpc 127.0.0.1:33332
+tensorium-node rpc 127.0.0.1:33332
 
 TENSORIUM_MC_STATE=~/tensorium-mc/state.json \
 TENSORIUM_MC_MEMPOOL=~/tensorium-mc/mempool.json \
 TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
-tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
+tensorium-node p2p-listen 0.0.0.0:33333</pre>
 
       <div class="param-table">
         <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet</code></span></div>
         <div class="param-row"><span class="param-key">P2P / RPC</span><span class="param-val"><code>33333</code> public P2P, <code>33332</code> localhost RPC</span></div>
-        <div class="param-row"><span class="param-key">Genesis nonce</span><span class="param-val"><code>56_167_663_277</code></span></div>
-        <div class="param-row"><span class="param-key">Genesis hash</span><span class="param-val"><code>0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</code></span></div>
+        <div class="param-row"><span class="param-key">Coinbase maturity</span><span class="param-val">10 blocks</span></div>
+        <div class="param-row"><span class="param-key">Difficulty</span><span class="param-val">42-bit launch, retarget active from genesis</span></div>
       </div>
     </div>
 
