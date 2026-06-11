@@ -37,7 +37,7 @@
 
     <div class="callout callout-info">
       <span class="callout-icon">ℹ</span>
-      <div class="callout-body"><strong>Mainnet is LIVE</strong> as of 2026-06-02. Chain ID: <code>tensorium-mainnet-candidate-0</code>. Mining rewards are real TXM. GPU required — mainnet initial difficulty is 40 bits.</div>
+      <div class="callout-body"><strong>Mainnet is LIVE</strong>. Chain ID: <code>tensorium-mainnet</code>. TensorHash v1 is GPU-first and mining rewards are real TXM. Mainnet initial difficulty is 42 bits.</div>
     </div>
 
     <div class="section" id="requirements">
@@ -152,8 +152,8 @@ tensorium-node mainnet-candidate sync seed.tensoriumlabs.com:33333</pre>
 TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-TENSORIUM_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333 \
-tensorium-node mainnet-candidate rpc 127.0.0.1:33332
+TENSORIUM_PEERS=seed.tensoriumlabs.com:33333 \
+tensorium-node rpc 127.0.0.1:33332
 
 # Terminal 2 — P2P listener (open to network)
 TENSORIUM_STATE=~/tensorium-node/state.json \
@@ -173,8 +173,8 @@ User=$(whoami)
 Environment=TENSORIUM_STATE=$HOME/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=$HOME/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=$HOME/tensorium-node/banlist.json
-Environment=TENSORIUM_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333
-ExecStart=/usr/local/bin/tensorium-node mainnet-candidate rpc 127.0.0.1:33332
+Environment=TENSORIUM_PEERS=seed.tensoriumlabs.com:33333
+ExecStart=/usr/local/bin/tensorium-node rpc 127.0.0.1:33332
 Restart=always
 RestartSec=10
 [Install]

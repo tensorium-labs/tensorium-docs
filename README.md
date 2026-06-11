@@ -13,14 +13,14 @@ This repository contains the public operator and developer guides for running a 
 
 ## Key Network Parameters
 
-- Chain ID: `tensorium-mainnet-candidate-0`
+- Chain ID: `tensorium-mainnet`
 - Ticker: `TXM`
 - P2P port: `33333/tcp`
 - RPC port: `33332/tcp` on localhost only
 - Primary seed: `seed.tensoriumlabs.com:33333`
-- Secondary seed: `seed2.tensoriumlabs.com:33333`
+- Primary public RPC: `https://rpc.tensoriumlabs.com`
 - Backup seed naming: expose the hostname, not the raw VPS IP
-- Coinbase maturity: `100` blocks
+- Coinbase maturity: `10` blocks
 - Transaction fees: currently no protocol-enforced minimum fee
 - Official pool fee: `5%` / `500` bps
 - Pool payout model: `gross reward - pool fee = net miner payout`

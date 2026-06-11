@@ -51,9 +51,9 @@ TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
 TENSORIUM_NODE_ID=my-node \
-tensorium-node mainnet-candidate init</pre>
+tensorium-node init</pre>
       <p>This writes the hardcoded mainnet genesis state locally. It should complete near-instantly on the released mainnet binaries.</p>
-      <pre>chain_id=tensorium-mainnet-candidate-0  height=0
+      <pre>chain_id=tensorium-mainnet  height=0
 hash=0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</pre>
     </div>
 
@@ -63,7 +63,7 @@ hash=0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</pre>
       <pre>TENSORIUM_STATE=~/tensorium-node/state.json \
 TENSORIUM_MEMPOOL=~/tensorium-node/mempool.json \
 TENSORIUM_BANS=~/tensorium-node/banlist.json \
-tensorium-node mainnet-candidate sync seed.tensoriumlabs.com:33333</pre>
+tensorium-node sync seed.tensoriumlabs.com:33333</pre>
       <p>Pulls all missing blocks from the seed node in batches of 50. Re-run any time to catch up after downtime.</p>
     </div>
 
@@ -74,13 +74,13 @@ tensorium-node mainnet-candidate sync seed.tensoriumlabs.com:33333</pre>
 MEMPOOL=~/tensorium-node/mempool.json
 BANS=~/tensorium-node/banlist.json
 
-nohup bash -c "TENSORIUM_MC_STATE=$STATE TENSORIUM_MC_MEMPOOL=$MEMPOOL \
-  TENSORIUM_MC_BANS=$BANS TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333 \
-  tensorium-node mainnet-candidate rpc 127.0.0.1:33332" > ~/tensorium-node/rpc.log 2>&1 &
+nohup bash -c "TENSORIUM_STATE=$STATE TENSORIUM_MEMPOOL=$MEMPOOL \
+  TENSORIUM_BANS=$BANS TENSORIUM_PEERS=seed.tensoriumlabs.com:33333 \
+  tensorium-node rpc 127.0.0.1:33332" > ~/tensorium-node/rpc.log 2>&1 &
 
-nohup bash -c "TENSORIUM_MC_STATE=$STATE TENSORIUM_MC_MEMPOOL=$MEMPOOL \
-  TENSORIUM_MC_BANS=$BANS \
-  tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333" > ~/tensorium-node/p2p.log 2>&1 &
+nohup bash -c "TENSORIUM_STATE=$STATE TENSORIUM_MEMPOOL=$MEMPOOL \
+  TENSORIUM_BANS=$BANS \
+  tensorium-node p2p-listen 0.0.0.0:33333" > ~/tensorium-node/p2p.log 2>&1 &
 
 echo "Node running. Check: curl http://localhost:33332/health"</pre>
 
@@ -89,7 +89,7 @@ echo "Node running. Check: curl http://localhost:33332/health"</pre>
 # {"ok":true}
 
 curl -s http://localhost:33332/getblockcount
-# {"blocks":N,"chain_id":"tensorium-mainnet-candidate-0","height":N-1}</pre>
+# {"blocks":N,"chain_id":"tensorium-mainnet","height":N-1}</pre>
     </div>
 
     <div class="section" id="systemd">
@@ -108,8 +108,8 @@ User=${USER}
 Environment=TENSORIUM_STATE=${HOME_DIR}/tensorium-node/state.json
 Environment=TENSORIUM_MEMPOOL=${HOME_DIR}/tensorium-node/mempool.json
 Environment=TENSORIUM_BANS=${HOME_DIR}/tensorium-node/banlist.json
-Environment=TENSORIUM_MC_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333
-ExecStart=/usr/local/bin/tensorium-node mainnet-candidate rpc 127.0.0.1:33332
+Environment=TENSORIUM_PEERS=seed.tensoriumlabs.com:33333
+ExecStart=/usr/local/bin/tensorium-node rpc 127.0.0.1:33332
 Restart=always
 RestartSec=10
 [Install]
@@ -184,7 +184,7 @@ TENSORIUM_MC_BANS=~/tensorium-mc/banlist.json \
 tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
 
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet</code></span></div>
         <div class="param-row"><span class="param-key">P2P / RPC</span><span class="param-val"><code>33333</code> public P2P, <code>33332</code> localhost RPC</span></div>
         <div class="param-row"><span class="param-key">Genesis nonce</span><span class="param-val"><code>56_167_663_277</code></span></div>
         <div class="param-row"><span class="param-key">Genesis hash</span><span class="param-val"><code>0000000000d61e99b9e2530609632b399d0f0b538c2d54daa1dddbfe28ea08dc</code></span></div>
@@ -194,10 +194,10 @@ tensorium-node mainnet-candidate p2p-listen 0.0.0.0:33333</pre>
     <div class="section" id="env">
       <h2>Environment Variables</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">TENSORIUM_MC_STATE</span><span class="param-val">Chain state file path. Default: <code>tensorium-mainnet-state.json</code></span></div>
-        <div class="param-row"><span class="param-key">TENSORIUM_MC_MEMPOOL</span><span class="param-val">Mempool file path. Default: <code>tensorium-mainnet-mempool.json</code></span></div>
-        <div class="param-row"><span class="param-key">TENSORIUM_MC_BANS</span><span class="param-val">Peer ban list file. Default: <code>tensorium-mainnet-banlist.json</code></span></div>
-        <div class="param-row"><span class="param-key">TENSORIUM_MC_PEERS</span><span class="param-val">Comma-separated peers for block/tx broadcast. Example: <code>seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_STATE</span><span class="param-val">Chain state file path. Default: <code>tensorium-mainnet-state.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_MEMPOOL</span><span class="param-val">Mempool file path. Default: <code>tensorium-mainnet-mempool.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_BANS</span><span class="param-val">Peer ban list file. Default: <code>tensorium-mainnet-banlist.json</code></span></div>
+        <div class="param-row"><span class="param-key">TENSORIUM_PEERS</span><span class="param-val">Comma-separated peers for block/tx broadcast. Example: <code>seed.tensoriumlabs.com:33333</code></span></div>
         <div class="param-row"><span class="param-key">TENSORIUM_NODE_ID</span><span class="param-val">Node identity shown in P2P handshake. Default: <code>node-&lt;timestamp&gt;</code></span></div>
       </div>
     </div>

@@ -73,7 +73,7 @@
       <div class="pre-header">request</div>
       <pre>curl http://localhost:33332/getblockcount</pre>
       <div class="pre-header">response</div>
-      <pre>{"blocks": 151, "chain_id": "tensorium-mainnet-candidate-0", "height": 150}</pre>
+      <pre>{"blocks": 1, "chain_id": "tensorium-mainnet", "height": 0}</pre>
     </div>
 
     <div class="section" id="getdifficulty">
@@ -82,7 +82,7 @@
       <div class="pre-header">request</div>
       <pre>curl http://localhost:33332/getdifficulty</pre>
       <div class="pre-header">response</div>
-      <pre>{"chain_id": "tensorium-mainnet-candidate-0", "height": 150, "leading_zero_bits": 36}</pre>
+      <pre>{"chain_id": "tensorium-mainnet", "height": 0, "leading_zero_bits": 42}</pre>
     </div>
 
     <div class="section" id="getblock">
@@ -95,7 +95,7 @@ curl http://localhost:33332/getblock/100</pre>
       <pre>{
   "block": {
     "header": {
-      "chain_id": "tensorium-mainnet-candidate-0",
+      "chain_id": "tensorium-mainnet",
       "height": 0,
       "leading_zero_bits": 26,
       "nonce": 95202247,
@@ -224,7 +224,7 @@ curl http://localhost:33332/getblock/100</pre>
       <div class="pre-header">TypeScript</div>
       <pre>import { TxmRPC } from '@tensorium/sdk';
 
-const rpc = new TxmRPC('https://mc-rpc.tensoriumlabs.com');
+const rpc = new TxmRPC('https://rpc.tensoriumlabs.com');
 const info = await rpc.getBlockCount();
 console.log(info.height, info.chain_id);</pre>
       <p>See the <a href="/developer.html">Developer Guide</a> for balance, signing, and send examples.</p>

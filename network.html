@@ -29,15 +29,15 @@
     <div class="section" id="chain">
       <h2>Chain Parameters (Mainnet — LIVE)</h2>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet</code></span></div>
         <div class="param-row"><span class="param-key">Ticker</span><span class="param-val">TXM</span></div>
-        <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">SHA256d (double-SHA256, same as Bitcoin)</span></div>
+        <div class="param-row"><span class="param-key">PoW Algorithm</span><span class="param-val">TensorHash v1 (memory-hard, GPU-first)</span></div>
         <div class="param-row"><span class="param-key">Target Block Time</span><span class="param-val">60 seconds</span></div>
-        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">40 leading zero bits (GPU required)</span></div>
-        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">32 bits</span></div>
-        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">56 bits</span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">42 leading zero bits (GPU required)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">34 bits</span></div>
+        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">58 bits</span></div>
         <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">120 blocks, ±1 bit max per window</span></div>
-        <div class="param-row"><span class="param-key">Coinbase Maturity</span><span class="param-val">100 blocks before reward is spendable</span></div>
+        <div class="param-row"><span class="param-key">Coinbase Maturity</span><span class="param-val">10 blocks before reward is spendable</span></div>
         <div class="param-row"><span class="param-key">Max Future Timestamp</span><span class="param-val">+2 hours from local time</span></div>
       </div>
     </div>
@@ -82,20 +82,19 @@
       <h2>Seed Nodes</h2>
       <div class="param-table">
         <div class="param-row"><span class="param-key">Primary seed</span><span class="param-val"><code>seed.tensoriumlabs.com:33333</code></span></div>
-        <div class="param-row"><span class="param-key">Secondary seed</span><span class="param-val"><code>seed2.tensoriumlabs.com:33333</code></span></div>
         <div class="param-row"><span class="param-key">Operator</span><span class="param-val">Tensorium Labs</span></div>
-        <div class="param-row"><span class="param-key">Usage</span><span class="param-val">Set <code>TENSORIUM_PEERS=seed.tensoriumlabs.com:33333,seed2.tensoriumlabs.com:33333</code> for initial sync and propagation redundancy.</span></div>
+        <div class="param-row"><span class="param-key">Usage</span><span class="param-val">Set <code>TENSORIUM_PEERS=seed.tensoriumlabs.com:33333</code> for initial sync and propagation.</span></div>
       </div>
     </div>
 
     <div class="section" id="mainnet">
       <h2>Mainnet Parameters (LIVE — 2026-06-02)</h2>
-      <p>These are the finalized mainnet parameters. The chain <code>tensorium-mainnet-candidate-0</code> is live.</p>
+      <p>These are the finalized mainnet parameters for the TensorHash v1 relaunch. The chain <code>tensorium-mainnet</code> is live.</p>
       <div class="param-table">
-        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet-candidate-0</code></span></div>
-        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">40 bits (GPU required — RTX 3000+ recommended)</span></div>
-        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">32 bits</span></div>
-        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">56 bits</span></div>
+        <div class="param-row"><span class="param-key">Chain ID</span><span class="param-val"><code>tensorium-mainnet</code></span></div>
+        <div class="param-row"><span class="param-key">Initial Difficulty</span><span class="param-val">42 bits (GPU required — RTX 3000+ recommended)</span></div>
+        <div class="param-row"><span class="param-key">Min Difficulty</span><span class="param-val">34 bits</span></div>
+        <div class="param-row"><span class="param-key">Max Difficulty</span><span class="param-val">58 bits</span></div>
         <div class="param-row"><span class="param-key">Adjustment Window</span><span class="param-val">120 blocks</span></div>
         <div class="param-row"><span class="param-key">RPC Port</span><span class="param-val">33332 (localhost only)</span></div>
         <div class="param-row"><span class="param-key">P2P Port</span><span class="param-val">33333 (public)</span></div>
